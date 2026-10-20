@@ -28,7 +28,7 @@ export default async function Portada() {
     coupon = { href: "/gala", label: "Asistir a la ceremonia", sub: "Reproducción individual" };
     secondary = { href: "/acta", label: "Acte Officiel — cifras de la votación" };
   } else if (settings.votingOpen) {
-    noticeTitle = "Les votations sont ouvertes";
+    noticeTitle = "Las votaciones están abiertas.";
     noticeSub = "Sella tu papeleta con el código de la soirée.";
     if (!session) {
       coupon = { href: "/entrar", label: "Entrar a la gala", sub: "Código de invitación" };
@@ -39,8 +39,8 @@ export default async function Portada() {
       coupon = { href: "/votar", label: "Continuar tu papeleta", sub: `${progress.length} de 4 categorías selladas` };
     }
   } else {
-    noticeTitle = "Les votations sont closes";
-    noticeSub = "La cérémonie se prépare. Rideau bientôt.";
+    noticeTitle = "Las votaciones están cerradas.";
+    noticeSub = "La ceremonia se prepara.";
   }
 
   const showEnter = settings.votingOpen && !session && !settings.revealActive;
@@ -50,7 +50,7 @@ export default async function Portada() {
       <RuleFrame className="m-3 flex-1 sm:m-5" innerClassName="flex flex-col p-5 sm:p-10">
         <div className="mx-auto flex w-full max-w-[560px] flex-1 flex-col items-center justify-between gap-8 text-center">
           <p className="caps-line font-caps text-[10px] text-ink-soft [letter-spacing:0.42em]">
-            Une seule fois par an
+            El evento más importante del año.
           </p>
 
           <div className="flex flex-col items-center gap-6">
@@ -72,18 +72,17 @@ export default async function Portada() {
               className="caps-line font-caps text-[11px] text-ink sm:text-[12px]"
               style={{ textWrap: "balance" }}
             >
-              Première Cérémonie · Saison 2026
+              Primera Edición · Temporada 2025/2026
             </p>
             <p className="max-w-[42ch] font-display text-[15px] italic leading-relaxed text-ink-soft">
-              La nuit la plus prestigieuse du chinparley — les prix de l&apos;année,
-              par la volonté de la peña, pour la peña.
+              La velada más prestigiosa del año. La celebración de los momentos más destacados del grupo.
             </p>
           </div>
 
           <div className="flex w-full flex-col items-center gap-6">
             <div className="w-full max-w-[420px]">
-              <div className="rule-double-b pb-3">
-                <p className="caps-line font-caps text-[12px] text-ink">{noticeTitle}</p>
+              <div className="rule-double-b">
+                <p className="caps-line font-caps text-[12px] text-ink pb-3 pt-3">{noticeTitle}</p>
               </div>
               <p className="pt-3 text-[14px] leading-relaxed text-ink-soft">{noticeSub}</p>
             </div>

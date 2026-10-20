@@ -7,7 +7,7 @@ import { connection } from "next/server";
 
 export const instant = false;
 export const metadata = {
-  title: "Ta papeleta — Chin Ballon d'Or",
+  title: "Papeleta — Chin Ballon d'Or",
 };
 
 export default async function VotarPage() {
