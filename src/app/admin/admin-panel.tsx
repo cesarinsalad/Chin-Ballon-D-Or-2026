@@ -213,11 +213,11 @@ export function AdminPanel() {
   }
 
   const tabs: Array<{ id: typeof tab; label: string }> = [
-    { id: "etat", label: "État" },
+    { id: "etat", label: "Estado" },
     { id: "pena", label: "Peña" },
-    { id: "categories", label: "Catégories" },
-    { id: "votants", label: "Votants" },
-    { id: "resultats", label: "Résultats" },
+    { id: "categories", label: "Categorías" },
+    { id: "votants", label: "Votantes" },
+    { id: "resultats", label: "Resultados" },
   ];
 
   return (
@@ -314,7 +314,7 @@ export function AdminPanel() {
               <div className="grid grid-cols-2 gap-2">
                 <Coupon
                   action={() => setConfirmVoting(false)}
-                  label="Annuler"
+                  label="Cancelar"
                   invert={false}
                 />
                 <Coupon
@@ -330,7 +330,7 @@ export function AdminPanel() {
                         : "Votación abierta. Que la peña sella.",
                     );
                   }}
-                  label="Confirmer"
+                  label="Confirmar"
                 />
               </div>
             ) : (
@@ -362,7 +362,7 @@ export function AdminPanel() {
                   toda la peña. ¿Alzamos el rideau?
                 </p>
                 <div className="grid grid-cols-2 gap-2">
-                  <Coupon action={() => setConfirmReveal(false)} label="Annuler" invert={false} />
+                  <Coupon action={() => setConfirmReveal(false)} label="Cancelar" invert={false} />
                   <Coupon
                     action={() => {
                       setConfirmReveal(false);
@@ -377,7 +377,7 @@ export function AdminPanel() {
                           : "Rideau alzado. La ceremonia está disponible.",
                       );
                     }}
-                    label="Confirmer"
+                    label="Confirmar"
                   />
                 </div>
               </div>
@@ -433,7 +433,7 @@ export function AdminPanel() {
                   }}
                   className="plate-press border border-ink/50 bg-ivory px-3 py-1.5 font-caps text-[10px] tracking-[0.14em] text-ink-soft uppercase"
                 >
-                  {member.photoUrl ? "Changer la photo" : "Ajouter une photo"}
+                  {member.photoUrl ? "Cambiar la foto" : "Añadir una foto"}
                 </button>
                 {member.photoUrl ? (
                   <button
@@ -449,7 +449,7 @@ export function AdminPanel() {
                     }
                     className="plate-press border border-ink/50 bg-ivory px-3 py-1.5 font-caps text-[10px] tracking-[0.14em] text-ink-soft uppercase"
                   >
-                    Retirer la photo
+                    Quitar la foto
                   </button>
                 ) : null}
                 <button
@@ -462,7 +462,7 @@ export function AdminPanel() {
                   }
                   className="plate-press border border-ink/50 bg-ivory px-3 py-1.5 font-caps text-[10px] tracking-[0.14em] text-ink-soft uppercase"
                 >
-                  Retirer de la peña
+                  Retirar de la peña
                 </button>
               </div>
             </article>
@@ -471,7 +471,7 @@ export function AdminPanel() {
             <input
               value={newMemberName}
               onChange={(event) => setNewMemberName(event.target.value)}
-              placeholder="Nouveau membre"
+              placeholder="Nuevo miembro"
               className="flex-1 border border-ink/40 bg-ivory-deep/50 px-3 py-2.5 font-caps text-[13px] text-ink placeholder:text-ink-faint/60 focus:border-foil"
               aria-label="Nuevo miembro"
             />
@@ -489,7 +489,7 @@ export function AdminPanel() {
               }
               className="plate-press border border-ink bg-ink px-4 py-2 font-caps text-[11px] tracking-[0.14em] text-ivory uppercase disabled:opacity-40"
             >
-              Ajouter
+              Añadir
             </button>
           </div>
           <p className="text-[11px] italic text-ink-faint">
@@ -600,7 +600,7 @@ export function AdminPanel() {
                           }
                           className="plate-press ml-auto border border-ink/40 bg-ivory px-2 py-1.5 font-caps text-[10px] tracking-[0.1em] text-ink-soft uppercase"
                         >
-                          Retirer
+                          Retirar
                         </button>
                       </div>
                       <textarea
@@ -639,7 +639,7 @@ export function AdminPanel() {
                     }
                     className="plate-press border border-ink/50 bg-ivory px-3 py-2 font-caps text-[10px] tracking-[0.14em] text-ink-soft uppercase"
                   >
-                    Ajouter un message
+                    Añadir un mensaje
                   </button>
                   <p className="text-[11px] italic text-ink-faint">
                     {category.nominees.length} mensajes nominados
@@ -710,7 +710,7 @@ export function AdminPanel() {
                             }
                             className="plate-press border border-ink/40 bg-ivory px-2 py-1 font-caps text-[10px] tracking-[0.1em] text-ink-soft uppercase"
                           >
-                            Retirer
+                            Retirar
                           </button>
                         </span>
                       </div>
@@ -736,7 +736,7 @@ export function AdminPanel() {
                       className="flex-1 border border-ink/40 bg-ivory-deep/50 px-2 py-2 font-caps text-[11px] text-ink focus:border-foil"
                       aria-label="Añadir miembro al podio"
                     >
-                      <option value="">Ajouter au podio…</option>
+                      <option value="">Añadir al podio…</option>
                       {data.members.map((member) => (
                         <option key={member.id} value={member.id}>
                           {member.name}
@@ -789,7 +789,7 @@ export function AdminPanel() {
             onClick={() => void loadResults()}
             className="plate-press self-center border border-ink/50 bg-ivory px-4 py-2 font-caps text-[11px] tracking-[0.14em] text-ink-soft uppercase"
           >
-            Rafraîchir les chiffres
+            Actualizar las cifras
           </button>
           {results ? (
             results.categories.map((category) => (
@@ -838,7 +838,7 @@ export function AdminPanel() {
         <DiamondDivider className="w-full max-w-[200px] text-ink-faint" />
         <CouponLink
           href="/"
-          label="Retour à la couverture"
+          label="Volver a la portada"
           invert={false}
           className="max-w-[300px]"
         />
@@ -851,7 +851,7 @@ export function AdminPanel() {
           }
           className="text-[10px] tracking-[0.3em] text-ink-faint/70 uppercase transition-colors hover:text-ink-soft"
         >
-          Fermer le bureau
+          Cerrar el bureau
         </button>
       </footer>
     </div>

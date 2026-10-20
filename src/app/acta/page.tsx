@@ -38,7 +38,7 @@ export default async function ActaPage() {
             href="/"
             className="caps-line-tight font-caps text-[11px] text-ink underline decoration-foil decoration-1 underline-offset-[6px]"
           >
-            Retour à la couverture
+            Volver a la portada
           </Link>
         </RuleFrame>
       </main>
@@ -271,7 +271,7 @@ export default async function ActaPage() {
               href="/"
               className="caps-line-tight font-caps text-[11px] text-ink underline decoration-foil decoration-1 underline-offset-[6px]"
             >
-              Retour à la couverture
+              Volver a la portada
             </Link>
           </footer>
         </div>

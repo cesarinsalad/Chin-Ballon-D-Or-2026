@@ -282,7 +282,7 @@ export function CeremonyPlayer({
             href="/"
             className="caps-line-tight font-caps text-[9px] text-ivory/60 underline decoration-ivory/40 underline-offset-4 transition-colors hover:text-ivory"
           >
-            Sortir
+            Salir
           </Link>
         </div>
       </header>
@@ -494,7 +494,7 @@ export function CeremonyPlayer({
             <div className="flex w-full max-w-[420px] flex-col gap-3">
               <CouponLink
                 href="/acta"
-                label="Acte Officiel — les chiffres"
+                label="Acta oficial — las cifras"
                 sub="Cifras anónimas de la votación"
               />
               <Coupon
@@ -505,7 +505,7 @@ export function CeremonyPlayer({
                   setStepIndex(0);
                   setEnvelopeOpen(false);
                 }}
-                label="Revoir la cérémonie"
+                label="Ver la ceremonia otra vez"
                 invert={false}
               />
             </div>
@@ -518,7 +518,7 @@ export function CeremonyPlayer({
 
       {phase !== "curtain" ? (
         <footer className="relative z-10 flex flex-col items-center gap-2 px-6 pb-7">
-          <Coupon action={advance} label="Continuer" invert={false} className="max-w-[300px]" />
+          <Coupon action={advance} label="Continuar" invert={false} className="max-w-[300px]" />
           <p className="text-[10px] tracking-[0.25em] text-ivory/45 uppercase">
             Toca el escenario para avanzar
           </p>

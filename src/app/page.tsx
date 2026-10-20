@@ -25,18 +25,18 @@ export default async function Portada() {
   if (settings.revealActive) {
     noticeTitle = "La Cérémonie";
     noticeSub = "Los sobres aguardan sobre la mesa. Toma asiento.";
-    coupon = { href: "/gala", label: "Asistir à la cérémonie", sub: "Reproducción individual" };
+    coupon = { href: "/gala", label: "Asistir a la ceremonia", sub: "Reproducción individual" };
     secondary = { href: "/acta", label: "Acte Officiel — cifras de la votación" };
   } else if (settings.votingOpen) {
     noticeTitle = "Les votations sont ouvertes";
     noticeSub = "Sella tu papeleta con el código de la soirée.";
     if (!session) {
-      coupon = { href: "/entrar", label: "Entrar à la soirée", sub: "Código de invitación" };
+      coupon = { href: "/entrar", label: "Entrar a la gala", sub: "Código de invitación" };
     } else if (ballotComplete) {
       coupon = null;
       noticeSub = "Tu papeleta está completa y sellada. Rideau bientôt.";
     } else {
-      coupon = { href: "/votar", label: "Continuar ta papeleta", sub: `${progress.length} de 4 categorías selladas` };
+      coupon = { href: "/votar", label: "Continuar tu papeleta", sub: `${progress.length} de 4 categorías selladas` };
     }
   } else {
     noticeTitle = "Les votations sont closes";

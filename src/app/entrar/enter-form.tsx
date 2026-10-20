@@ -131,7 +131,7 @@ export function EnterForm({ members }: { members: MemberOption[] }) {
       <Coupon
         action={() => memberId && submit(memberId)}
         disabled={memberId === null || !codeReady || submitting}
-        label={submitting ? "Abriendo la puerta…" : "Firmar et recevoir ta papeleta"}
+        label={submitting ? "Abriendo la puerta…" : "Firmar y recibir tu papeleta"}
         className="max-w-[420px] self-center"
       />
     </div>

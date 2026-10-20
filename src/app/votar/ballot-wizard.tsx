@@ -210,7 +210,7 @@ function BallotWizardInner({
           Tu papeleta incompleta se queda en el vestíbulo. La cérémonie decidirá el
           resto con los votos sellados.
         </p>
-        <CouponLink label="Volver à la couverture" href="/" invert={false} className="max-w-[380px]" />
+        <CouponLink label="Volver a la portada" href="/" invert={false} className="max-w-[380px]" />
       </div>
     );
   }
@@ -226,7 +226,7 @@ function BallotWizardInner({
           {voterName}, tus cuatro categorías viajan selladas en el cajón del
           teatro. Que ruede el rideau.
         </p>
-        <CouponLink label="Retour à la couverture" href="/" invert={false} className="max-w-[380px]" />
+        <CouponLink label="Volver a la portada" href="/" invert={false} className="max-w-[380px]" />
       </div>
     );
   }
