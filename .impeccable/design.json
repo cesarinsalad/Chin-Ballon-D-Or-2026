@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-20T03:30:00Z",
+  "title": "Design System: Chin Ballon d'Or",
+  "extensions": {
+    "colorMeta": {
+      "ivory": { "role": "neutral", "displayName": "Marfil Papel", "canonical": "#efe6d2", "tonalRamp": ["#1c1813", "#45402f", "#6e6557", "#d8c9a8", "#e4d7bd", "#efe6d2", "#f5edda", "#faf5e9"] },
+      "ink": { "role": "primary", "displayName": "Tinta Grabado", "canonical": "#1c1813", "tonalRamp": ["#1c1813", "#2a2418", "#45402f", "#6e6557", "#8a8171", "#a8a08e", "#c9c2b0", "#e8e0cc"] },
+      "foil": { "role": "secondary", "displayName": "Foil Estampado", "canonical": "#8f6f2e", "tonalRamp": ["#4a3a16", "#7a5c22", "#8f6f2e", "#a5813a", "#b8924a", "#c8a45c", "#dcbe86", "#f0e0b8"] },
+      "stage": { "role": "neutral", "displayName": "Platea", "canonical": "#12100c", "tonalRamp": ["#0a0908", "#12100c", "#1e1a13", "#2a251b", "#3a3428", "#554d3c", "#7a7060", "#a89e8c"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Didone de Ópera", "purpose": "Solo el wordmark CHIN BALLON D'OR." },
+      "headline": { "displayName": "Titular de Escena", "purpose": "Títulos de página y escena, uppercase." },
+      "title": { "displayName": "Título de Categoría", "purpose": "Encabezados de sección y tarjetas." },
+      "body": { "displayName": "Serif de Trabajo", "purpose": "Párrafos, instrucciones, mensajes." },
+      "label": { "displayName": "Versalitas de Cobregrabado", "purpose": "Cartuchos, encabezados de tabla, etiquetas; siempre uppercase con tracking ≥0.14em." }
+    },
+    "shadows": [
+      { "name": "plate-press", "value": "inset 0 1px 0 rgba(255,255,255,0.32), inset 0 -2px 3px rgba(28,24,19,0.22), 0 1px 0 rgba(255,255,255,0.55), 0 3px 6px rgba(28,24,19,0.28)", "purpose": "Botones y placas en reposo; al pulsar se invierte a inset hundido." },
+      { "name": "emboss-seal", "value": "inset 0 2px 3px rgba(255,255,255,0.6), inset 0 -3px 4px rgba(28,24,19,0.35), 0 1px 1px rgba(255,255,255,0.7)", "purpose": "Estampado en seco del sello CB, sin tinta." },
+      { "name": "vignette-stage", "value": "inset 0 0 clamp(60px, 14vw, 160px) 24px rgba(0,0,0,0.55)", "purpose": "Oscurecimiento de bordes de la platea." }
+    ],
+    "motion": [
+      { "name": "ease-reveal", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Entradas de escena y placas; exponencial de salida desde default visible." },
+      { "name": "duration-press", "value": "150ms", "purpose": "Transición de prensa de controles." },
+      { "name": "duration-envelope", "value": "550ms", "purpose": "Apertura de solapa del sobre (rotateX -168º)." },
+      { "name": "reduced-motion", "value": "MotionConfig reducedMotion=\"user\" + matchMedia gate en confeti", "purpose": "Respeto completo de prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Coupon de Tinta (CTA primario)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Cupón de cortar con troquel y tijeras; fondo tinta, texto marfil.",
+      "html": "<button class=\"ds-coupon ds-coupon-ink\"><span class=\"ds-coupon-stub\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"><circle cx=\"6\" cy=\"6.5\" r=\"2.6\"/><circle cx=\"6\" cy=\"17.5\" r=\"2.6\"/><path d=\"M8.2 8.2 L20 18.5 M8.2 15.8 L20 5.5\"/></svg></span><span class=\"ds-coupon-body\"><span class=\"ds-coupon-label\">Asistir à la cérémonie</span><span class=\"ds-coupon-sub\">Reproducción individual</span></span><svg class=\"ds-coupon-arrow\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"><path d=\"M4 12 H19\"/><path d=\"M13.5 6.5 L19 12 L13.5 17.5\"/></svg></button>",
+      "css": ".ds-coupon { display: flex; align-items: stretch; width: 100%; max-width: 420px; border: 1px solid #1c1813; cursor: pointer; padding: 0; text-align: left; font-family: 'Cinzel', serif; box-shadow: inset 0 1px 0 rgba(255,255,255,0.32), inset 0 -2px 3px rgba(28,24,19,0.22), 0 1px 0 rgba(255,255,255,0.55), 0 3px 6px rgba(28,24,19,0.28); transition: transform 150ms, box-shadow 150ms; } .ds-coupon:active { transform: translateY(1px); box-shadow: inset 0 2px 4px rgba(28,24,19,0.3); } .ds-coupon-ink { background: #1c1813; color: #efe6d2; } .ds-coupon-stub { display: flex; align-items: center; justify-content: center; width: 44px; position: relative; color: rgba(239,230,210,0.8); } .ds-coupon-stub::before { content: ''; position: absolute; top: 8px; bottom: 8px; left: 50%; border-left: 1px dashed rgba(239,230,210,0.55); } .ds-coupon-body { flex: 1; display: flex; flex-direction: column; gap: 4px; align-items: flex-start; justify-content: center; padding: 16px 20px 16px 16px; } .ds-coupon-label { font-size: 13px; letter-spacing: 0.32em; text-transform: uppercase; } .ds-coupon-sub { font-family: 'Source Serif 4', serif; font-style: italic; font-size: 13px; color: rgba(239,230,210,0.8); } .ds-coupon-arrow { color: #c8a45c; align-self: center; margin-right: 20px; }"
+    },
+    {
+      "name": "Coupon de Marfil (CTA secundario)",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Cupón en papel marfil con tinta; para acciones calmadas.",
+      "html": "<button class=\"ds-coupon ds-coupon-ivory\"><span class=\"ds-coupon-stub ds-stub-ink\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"><circle cx=\"6\" cy=\"6.5\" r=\"2.6\"/><circle cx=\"6\" cy=\"17.5\" r=\"2.6\"/><path d=\"M8.2 8.2 L20 18.5 M8.2 15.8 L20 5.5\"/></svg></span><span class=\"ds-coupon-body ds-body-ink\"><span class=\"ds-coupon-label\">Retour à la couverture</span></span><svg class=\"ds-coupon-arrow ds-arrow-ink\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"><path d=\"M4 12 H19\"/><path d=\"M13.5 6.5 L19 12 L13.5 17.5\"/></svg></button>",
+      "css": ".ds-coupon-ivory { background: #efe6d2; color: #1c1813; } .ds-stub-ink { color: #45402f; } .ds-stub-ink::before { border-left-color: rgba(28,24,19,0.5) !important; } .ds-body-ink .ds-coupon-sub { color: #45402f; } .ds-arrow-ink { color: #8f6f2e; }"
+    },
+    {
+      "name": "Input de Código",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Campo de código de invitación: versalitas con tracking largo, fondo hundido.",
+      "html": "<input class=\"ds-input-code\" placeholder=\"••••••\" autocomplete=\"off\" />",
+      "css": ".ds-input-code { width: 100%; border: 1px solid #1c1813; background: rgba(228,215,189,0.6); color: #1c1813; padding: 14px 16px; text-align: center; font-family: 'Cinzel', serif; font-size: 18px; letter-spacing: 0.35em; text-transform: uppercase; caret-color: #8f6f2e; } .ds-input-code::placeholder { color: rgba(110,101,87,0.6); } .ds-input-code:focus { outline: 2px solid #8f6f2e; outline-offset: 3px; }"
+    },
+    {
+      "name": "Monograma",
+      "kind": "chip",
+      "refersTo": "card",
+      "description": "Retrato circular con anillo doble; iniciales de cobregrabado o foto.",
+      "html": "<span class=\"ds-monogram\"><span class=\"ds-monogram-inner\">FC</span></span>",
+      "css": ".ds-monogram { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 9999px; border: 1px solid #1c1813; background: #efe6d2; position: relative; } .ds-monogram-inner { display: inline-flex; align-items: center; justify-content: center; position: absolute; inset: 2.5px; border-radius: 9999px; border: 1px solid rgba(28,24,19,0.6); font-family: 'Cinzel', serif; font-size: 19px; color: #1c1813; }"
+    },
+    {
+      "name": "Burbuja de Mensaje",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Cartucho de doble filete con firma en versalitas y fecha itálica.",
+      "html": "<figure class=\"ds-bubble\"><figcaption><span class=\"ds-bubble-author\">FIUME</span><span class=\"ds-bubble-date\">mar 3 sep</span></figcaption><blockquote>Mensaje nominado — el texto íntego del mensaje va aquí.</blockquote></figure>",
+      "css": ".ds-bubble { position: relative; border: 1px solid #1c1813; background: #efe6d2; padding: 16px 20px; margin: 0; } .ds-bubble::before { content: ''; position: absolute; inset: 3px; border: 1px solid rgba(28,24,19,0.45); pointer-events: none; } .ds-bubble figcaption { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; } .ds-bubble-author { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.14em; color: #45402f; } .ds-bubble-date { font-family: 'Source Serif 4', serif; font-style: italic; font-size: 11px; color: #6e6557; } .ds-bubble blockquote { margin-top: 8px; font-family: 'Source Serif 4', serif; font-size: 14px; line-height: 1.4; color: #1c1813; }"
+    },
+    {
+      "name": "Sello en Seco",
+      "kind": "custom",
+      "refersTo": "card",
+      "description": "Estampado cieco sin tinta: círculo con relieve y monograma CB.",
+      "html": "<span class=\"ds-seal\"><span>CB</span></span>",
+      "css": ".ds-seal { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 9999px; background: #efe6d2; box-shadow: inset 0 2px 3px rgba(255,255,255,0.6), inset 0 -3px 4px rgba(28,24,19,0.35), 0 1px 1px rgba(255,255,255,0.7); } .ds-seal span { font-family: 'Cinzel', serif; font-size: 15px; color: rgba(28,24,19,0.7); }"
+    },
+    {
+      "name": "Placa de Ganador",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Placa marfil de doble filete bajo el foco: monograma foil, nombre dorado, cifras.",
+      "html": "<article class=\"ds-winner-plate\"><p class=\"ds-winner-position\">1ER PRIX</p><div class=\"ds-winner-row\"><span class=\"ds-monogram\"><span class=\"ds-monogram-inner ds-foil\">F</span></span><p class=\"ds-winner-name\">FIUME</p></div><p class=\"ds-winner-stats\">8 puntos · 1 primeros puestos · 100% de las papeletas</p></article>",
+      "css": ".ds-winner-plate { position: relative; width: 100%; max-width: 440px; border: 1px solid #1c1813; background: #efe6d2; padding: 20px 24px; text-align: center; } .ds-winner-plate::before { content: ''; position: absolute; inset: 3px; border: 1px solid rgba(28,24,19,0.5); pointer-events: none; } .ds-winner-position { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: #7a5c22; } .ds-winner-row { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 12px; } .ds-foil { color: #7a5c22; border-color: rgba(143,111,46,0.7) !important; } .ds-winner-name { font-family: 'Bodoni Moda', serif; font-weight: 700; font-size: 32px; letter-spacing: 0.03em; text-transform: uppercase; color: #8f6f2e; margin: 0; } .ds-winner-stats { font-variant-numeric: tabular-nums; margin-top: 16px; font-size: 12px; letter-spacing: 0.05em; color: #45402f; }"
+    },
+    {
+      "name": "Marco de Hoja (contenedor)",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Doble filete perimetral que cierra la hoja completa de cada página.",
+      "html": "<div class=\"ds-sheet\"><div class=\"ds-sheet-inner\">Contenido de la página</div></div>",
+      "css": ".ds-sheet { border: 1px solid #1c1813; margin: 12px; flex: 1; } .ds-sheet-inner { border: 1px solid rgba(28,24,19,0.7); margin: 5px; padding: 40px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "El programa impreso de la función anual",
+    "overview": "Toda la interfaz es el programa de gala impreso: papel marfil con grano, tinta negra de cobregrabado y un único foil dorado que solo toca lo premiado. La ceremonia es una platea oscura con foco de escenario que vive dentro del programa. La elegancia nace de la densidad de impresión — dobles filetes, versalitas con tracking largo, florituras grabadas — nunca de brillos ni gradientes.",
+    "keyCharacteristics": [
+      "Hoja con marco de doble filete que cierra el viewport completo con márgenes parejos (12px)",
+      "Un solo acento metálico reservado a lo premiado",
+      "Estados de prensa: placas que se hunden, sellos en seco, tinta que se vuelve continua al sellar",
+      "La ceremonia invierte el mundo: platea casi negra, foco cálido, placas marfil bajo el spot"
+    ],
+    "rules": [
+      { "name": "La regla del foil sagrado", "body": "El dorado solo toca lo premiado: wordmark, ganadores, podios y sellos. Si un elemento no ganó nada, va en tinta.", "section": "colors" },
+      { "name": "La regla de la hoja entera", "body": "Toda página pública vive dentro del marco de doble filete con margen parejo; nada toca el borde del viewport.", "section": "layout" },
+      { "name": "La regla del tracker largo", "body": "Las versalitas Cinzel nunca bajan de 0.14em de tracking; el aire entre letras ES el estilo de grabado.", "section": "typography" },
+      { "name": "La regla de la prensa", "body": "Un control se hunde al pulsarlo; nunca salta hacia arriba. La metáfora es presionar plomo tipográfico, no levantar tarjetas.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do usar dobles filetes (border + inner inset 5px) para todo contenedor impreso",
+      "Do reservar el foil para lo premiado y los sellos; el resto en tinta",
+      "Do hundir los controles al pulsar (plate-press invertido + translateY(1px))",
+      "Do escribir el sabor ceremonial en francés y el cuerpo en español",
+      "Do respetar prefers-reduced-motion en toda la cadena de animación"
+    ],
+    "donts": [
+      "Don't usar gradientes en texto ni brillos metálicos falsos: el foil es color sólido con relieve de imprenta",
+      "Don't redondear esquinas de tarjetas, botones o marcos (solo círculos perfectos de monograma/sello)",
+      "Don't mostrar papeletas individuales ni atribuir votos a nombres: el acta es solo agregada",
+      "Don't animar con más de un movimiento material por escena de ceremonia",
+      "Don't usar rojo para errores: el error es un cartucho de tinta con doble regla y nota itálica"
+    ]
+  }
+}

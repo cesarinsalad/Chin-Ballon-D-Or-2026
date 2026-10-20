@@ -1,0 +1,115 @@
+{
+  "title": "Elige el mundo visual de Chin Ballon d'Or",
+  "question": "El reparto asignó El Programa de Gala (programa de ópera grabado). Consérvalo, toma un alterno, o vuelve a repartir.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "El Programa de Gala",
+      "kicker": "THE ROLL",
+      "lineage": "programas de ópera y gala, cobregrabado sobre papel verjurado",
+      "thesis": "Toda la web es el programa impreso de la función anual: la papeleta es el cupón del programa y la ceremonia, una platea oscura con foil dorado que vive dentro de él.",
+      "palette": ["#efe6d2", "#1c1813", "#b08d3e", "#12100c", "#6e6557"],
+      "materials": ["cobregrabado", "prensa tipográfica", "foil dorado estampado", "papel verjurado"],
+      "viewport": "Portada del programa: 'Chin Ballon d'Or' estampado en foil al centro, 'Première Cérémonie · Saison 2026' en versalitas grabadas, doble filete enmarcando la hoja, y el acceso como cupón de cortar.",
+      "risk": "Puede leerse como 'chic papelero' genérico si las placas no llevan densidad de grabado real: tramas, capitulares, dobles filetes, florituras.",
+      "raised": [
+        { "from": "challenger-cdrom", "raise": "La scène: la ceremonia ocurre dentro de una platea oscura enmarcada, un proscenio fijo dentro del programa, no una página que escrolea." },
+        { "from": "challenger-onebit", "raise": "Cada control talla su estado a golpe de vista: entintado (seleccionado), hundido (pulsado), estampado en seco (sellado)." },
+        { "from": "challenger-raku", "raise": "La revelación se sostiene quieta: un solo movimiento material por escena, sin sopa de animación." },
+        { "from": "challenger-sewing", "raise": "La tinta del compromiso: las selecciones van en línea punteada hasta sellar la papeleta; al sellarse, la tinta se vuelve continua." }
+      ]
+    },
+    {
+      "id": "model-pick",
+      "label": "La Etiqueta de Cava",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "contraetiquetas de cava y casas de champagne",
+      "thesis": "El sitio es la contraetiqueta de una cava anual: 'Édition 2026', numeración de botella, lacre del corcho y tipografía de casa de lujo.",
+      "palette": ["#f2ead6", "#17140f", "#9a7b2d", "#7d1f2a"],
+      "materials": ["etiqueta tipográfica", "lacre", "cápsula de foil", "numeración de añada"],
+      "viewport": "Etiqueta frontal vertical: el nombre de la casa al centro en didone, la añada en cifras doradas, y el 'dégorgement' (la gala) como fecha marcada a mano.",
+      "risk": "Es la dirección más cercana a lo que cualquier landing de gala buscaría: familiar y eficaz, el vecino elegante del canon."
+    },
+    {
+      "id": "challenger-handbill",
+      "label": "Cartel de Baile Zoot",
+      "verdict": "competitive",
+      "lineage": "carteles de baile de la era zoot, tinta plana a dos colores",
+      "thesis": "La gala como cartel de una sola noche: nombres apilados por billing y borde festoneado cerrando la hoja.",
+      "palette": ["#f3e8cf", "#4a2440", "#b06a24"],
+      "materials": ["prensa de dos tintas", "papel verjurado", "impresión en relieve"],
+      "viewport": "Cartel a sangre completa: la silueta exagerada del ganador en tinta plana y los nominados apilados en versalitas por importancia de cartel.",
+      "case": "La jerarquía por billing casa perfecto con el orden de la ceremonia (Balón de Oro como cabeza de cartel); pierde en identificación: el grupo leería plumas de baile antes que gala.",
+      "kept": "El billing: la ceremonia se compone como cartel, el Balón de Oro cierra como cabeza de cartel.",
+      "hero": "https://impeccable.style/worlds/cards/posters-covers-sleeves-pachuco-zoot-handbill-hero.webp"
+    },
+    {
+      "id": "challenger-teletext",
+      "label": "Teletexto Futbolero",
+      "verdict": "competitive",
+      "lineage": "revistas de teletexto con páginas de tres cifras",
+      "thesis": "La gala como teletexto: cada categoría una página numerada, y los resultados aguardan tras REVEAL.",
+      "palette": ["#000000", "#ffff00", "#00c0c0", "#ff4040"],
+      "materials": ["mosaico de bloques", "rejilla de 40x24", "fósforo"],
+      "viewport": "Página 302: cabecera de doble altura con el marcador de la gala y los nominados como filas numeradas del alineación.",
+      "case": "El REVEAL oculto es literalmente la mecánica de suspenso de la ceremonia y el teletexto futbolero cala hondo en este público; pierde en claridad: el bitmap choca con el brief de elegancia.",
+      "kept": "El estado REVEAL: las respuestas viven en la página pero veladas hasta la revelación.",
+      "hero": "https://impeccable.style/worlds/cards/broadcast-programming-teletext-service-hero.webp"
+    },
+    {
+      "id": "challenger-cdrom",
+      "label": "Consola CD-ROM",
+      "verdict": "declined",
+      "lineage": "consolas multimedia de mediados de los 90",
+      "palette": ["#3b3f45", "#78848f", "#3fb8af", "#8b5fbf"],
+      "materials": ["paneles biselados", "inlays de metal cepillado"],
+      "viewport": "Consola fija con una pequeña ventana de vídeo al centro donde se proyecta la gala.",
+      "kept": "La ventana viva enmarcada: la ceremonia ocurre dentro de una platea fija.",
+      "hero": "https://impeccable.style/worlds/cards/digital-design-canon-cdrom-chrome-navigation-hero.webp"
+    },
+    {
+      "id": "challenger-onebit",
+      "label": "Escritorio de Un Bit",
+      "verdict": "declined",
+      "lineage": "escritorios monocromos tempranos",
+      "palette": ["#000000", "#ffffff", "#6e6e6e"],
+      "materials": ["tramado de puntos", "chrome de un píxel"],
+      "viewport": "Ventanas superpuestas con selección de hormigas marchantes sobre las tarjetas de nominados.",
+      "kept": "Estados de control a golpe de vista: entintado, hundido, sellado.",
+      "hero": "https://impeccable.style/worlds/cards/medium-native-one-bit-desktop-hero.webp"
+    },
+    {
+      "id": "challenger-raku",
+      "label": "Horno Raku",
+      "verdict": "declined",
+      "lineage": "cerámica raku: humo, carbonización, craquelado",
+      "palette": ["#141210", "#d9d4c7", "#c25a1f"],
+      "materials": ["arcilla carbonizada", "esmalte craquelado", "brasas"],
+      "viewport": "La revelación como apertura de horno: la pieza al rojo saliendo del humo.",
+      "kept": "La revelación quieta: un solo movimiento material por escena, sin sopa de animación.",
+      "hero": "https://impeccable.style/worlds/cards/clay-ceramics-fracture-raku-smoke-flash-hero.webp"
+    },
+    {
+      "id": "challenger-sewing",
+      "label": "Sobre de Patrones",
+      "verdict": "declined",
+      "lineage": "sobres de patrones de costura con tejido pautado",
+      "palette": ["#d8bd8f", "#241d16", "#b33a3a"],
+      "materials": ["tejido manila", "líneas de corte punteadas", "numerales de pieza"],
+      "viewport": "La papeleta como plano de corte: piezas numeradas y líneas punteadas que se vuelven sólidas al confirmar.",
+      "kept": "La tinta del compromiso: punteado hasta sellar, continuo tras el sello.",
+      "hero": "https://impeccable.style/worlds/cards/fashion-folded-worlds-sewing-pattern-envelope-hero.webp"
+    }
+  ],
+  "reroll": { "registers": ["safer", "bolder"] },
+  "canon": true,
+  "canonCard": {
+    "label": "La Gala Châtelet",
+    "thesis": "Lo que esta categoría siempre embarca: escenario negro, serif dorada, sobre con redoble. Ejecutado impecable.",
+    "palette": ["#0b0a08", "#d4af37", "#f2ead8", "#2a2418"],
+    "materials": ["terciopelo negro", "luminaria de escenario", "sobre lacrado"],
+    "viewport": "Héroe a sangre completa sobre negro: el balón dorado iluminado por un solo haz, título en serif dorada y CTA 'Entrar a la gala'.",
+    "risk": "Impecable e indistinguible: es exactamente la parodia del Balón de Oro que cualquiera esperaría."
+  },
+  "steer": true
+}
