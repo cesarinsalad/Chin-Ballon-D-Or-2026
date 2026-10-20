@@ -27,7 +27,7 @@ export async function syncAutoNominees() {
       );
     }
     const stale = existing
-      .filter((n) => n.memberId !== null && !memberRows.some((m) => m.id === n.memberId))
+      .filter((n) => n.memberId === null || !memberRows.some((m) => m.id === n.memberId))
       .map((n) => n.id);
     if (stale.length > 0) {
       await db().delete(nominees).where(inArray(nominees.id, stale));
@@ -62,6 +62,7 @@ export async function memberHasActivity(memberId: number): Promise<string | null
 export async function deleteMember(memberId: number): Promise<string | null> {
   const guard = await memberHasActivity(memberId);
   if (guard) return guard;
+  await db().delete(nominees).where(eq(nominees.memberId, memberId));
   await db().delete(members).where(eq(members.id, memberId));
   await syncAutoNominees();
   return null;
