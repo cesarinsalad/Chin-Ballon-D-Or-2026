@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 import { getCeremonyData } from "@/lib/event";
 import { getVoterSession } from "@/lib/session";
 import { BallVignette, DiamondDivider, RuleFrame } from "@/components/ornaments";
 import { Monogram } from "@/components/monogram";
+import { mainLogo } from "@/components/logos";
 import { connection } from "next/server";
 
 export const instant = false;
@@ -50,7 +52,11 @@ export default async function ActaPage() {
       <RuleFrame className="m-3 flex-1 sm:m-5" innerClassName="flex flex-col p-5 sm:p-10">
         <div className="mx-auto flex w-full max-w-[620px] flex-col gap-10 py-6">
           <header className="flex flex-col items-center gap-4 text-center">
-            <BallVignette className="h-12 w-24 text-ink-soft" />
+            <Image
+              src={mainLogo()}
+              alt="El Chin Ballon d'Or"
+              className="h-auto w-[min(44vw,170px)]"
+            />
             <h1
               className="font-display font-bold uppercase text-foil-ink"
               style={{ fontSize: "clamp(1.8rem, 8vw, 2.6rem)", letterSpacing: "0.05em" }}

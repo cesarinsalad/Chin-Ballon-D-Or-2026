@@ -1,14 +1,18 @@
+import Image from "next/image";
 import Link from "next/link";
-import { BallVignette, DiamondDivider, RuleFrame } from "@/components/ornaments";
+import { connection } from "next/server";
 import { CouponLink } from "@/components/coupon";
 import { getSettings, getVoterProgress } from "@/lib/event";
 import { getVoterSession } from "@/lib/session";
-import { connection } from "next/server";
+import { RuleFrame, DiamondDivider } from "@/components/ornaments";
+import { mainLogo } from "@/components/logos";
 
 export const instant = false;
 export const metadata = {
-  title: "Chin Ballon d'Or — Première Cérémonie",
+  title: "Chin Ballon d'Or — Primera Edición",
 };
+
+const logo = mainLogo();
 
 export default async function Portada() {
   await connection();
@@ -54,19 +58,13 @@ export default async function Portada() {
           </p>
 
           <div className="flex flex-col items-center gap-6">
-            <BallVignette className="h-16 w-30 text-ink-soft sm:h-20 sm:w-40" />
-            <h1
-              className="font-display font-bold uppercase text-foil"
-              style={{
-                fontSize: "clamp(2.6rem, 12vw, 4.6rem)",
-                lineHeight: 1.02,
-                letterSpacing: "0.045em",
-                textShadow: "0 1px 0 rgba(239,230,210,0.5)",
-              }}
-            >
-              Chin
-              <br />
-              Ballon d&apos;Or
+            <h1>
+              <Image
+                src={logo}
+                alt="El Chin Ballon d'Or"
+                priority
+                className="h-auto w-[min(64vw,280px)] sm:w-[340px]"
+              />
             </h1>
             <p
               className="caps-line font-caps text-[11px] text-ink sm:text-[12px]"

@@ -3,13 +3,16 @@
 import { useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import type { CeremonyCategory } from "@/lib/event";
-import { BallVignette } from "@/components/ornaments";
 import { ChatBubble } from "@/components/chat-bubble";
 import { Monogram } from "@/components/monogram";
 import { Coupon, CouponLink } from "@/components/coupon";
 import { GoldConfetti } from "@/components/gold-confetti";
 import { initAudio, playDrumroll } from "@/components/drumroll";
+import { CATEGORY_LOGOS, mainLogo } from "@/components/logos";
+
+const mainLogoImage = mainLogo();
 
 type PodiumEntry = {
   key: string;
@@ -198,6 +201,7 @@ export function CeremonyPlayer({
   );
 
   const scene = sceneIndex >= 0 && sceneIndex < scenes.length ? scenes[sceneIndex] : null;
+  const sceneLogo = scene ? CATEGORY_LOGOS[scene.category.key] ?? null : null;
   const isBalonScene = scene?.category.key === "balon";
   const group = scene && phase === "reveal" ? scene.groups[stepIndex] : null;
   const isWinnerStep = group !== null && group.position === 1;
@@ -294,19 +298,13 @@ export function CeremonyPlayer({
             {...fade}
             className="relative z-10 flex flex-1 flex-col items-center justify-center gap-7 px-8 text-center"
           >
-            <BallVignette className="h-16 w-32 text-foil-bright" />
-            <h1
-              className="font-display font-bold uppercase text-foil-bright"
-              style={{
-                fontSize: "clamp(2.4rem, 11vw, 4.2rem)",
-                lineHeight: 1.04,
-                letterSpacing: "0.05em",
-                textShadow: "0 1px 0 rgba(18,16,12,0.8)",
-              }}
-            >
-              Chin
-              <br />
-              Ballon d&apos;Or
+            <h1>
+              <Image
+                src={mainLogoImage}
+                alt="El Chin Ballon d'Or"
+                className="h-auto w-[min(72vw,340px)]"
+                priority
+              />
             </h1>
             <p className="caps-line font-caps text-[10px] text-ivory/80">
               Première Cérémonie · Saison 2026
@@ -327,11 +325,23 @@ export function CeremonyPlayer({
             <p className="caps-line font-caps text-[10px] text-foil-bright">
               Numéro {sceneIndex + 1} · {voters} votants
             </p>
-            <h2
-              className="font-display font-bold uppercase text-ivory"
-              style={{ fontSize: "clamp(1.7rem, 7.5vw, 2.6rem)", letterSpacing: "0.05em" }}
-            >
-              {scene.category.title}
+            <h2>
+              {sceneLogo ? (
+                <Image
+                  src={sceneLogo.src}
+                  alt={scene.category.title}
+                  className={`h-auto ${
+                    sceneLogo.wide ? "w-[min(80vw,360px)]" : "w-[min(52vw,240px)]"
+                  }`}
+                />
+              ) : (
+                <span
+                  className="font-display font-bold uppercase text-ivory"
+                  style={{ fontSize: "clamp(1.7rem, 7.5vw, 2.6rem)", letterSpacing: "0.05em" }}
+                >
+                  {scene.category.title}
+                </span>
+              )}
             </h2>
             {scene.category.tagline ? (
               <p className="max-w-[44ch] text-[14px] leading-relaxed text-ivory/70 italic">
@@ -442,7 +452,12 @@ export function CeremonyPlayer({
                       </motion.article>
                     ))}
                     {isWinnerStep && isBalonScene && envelopeOpen ? (
-                      <BallVignette className="h-12 w-24 text-foil" />
+                      <Image
+                        src={mainLogoImage}
+                        alt=""
+                        aria-hidden="true"
+                        className="h-auto w-[min(42vw,170px)]"
+                      />
                     ) : null}
                   </>
                 )}

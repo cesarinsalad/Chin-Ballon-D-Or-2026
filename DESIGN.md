@@ -82,6 +82,7 @@ Toda la interfaz es el programa de gala impreso: papel marfil con grano, tinta n
 - Un solo acento metálico: el foil aparece en el wordmark, ganadores, sellos y numerales de podio; nunca como decoración.
 - Estados "de prensa": las placas se hunden al pulsar, los sellos van en seco (sin tinta), las selecciones punteadas se vuelven tinta continua al sellar.
 - La ceremonia invierte el mundo: fondo stage casi negro, foco radial cálido, placas marfil flotando bajo el spot.
+- Asset de marca: el logo "El Chin Ballon d'Or" es un PNG transparente con didone color salvia (#a9ac8c aproximado) — convive con la paleta como marca, nunca recolorado. Reemplaza al wordmark tipográfico en portada, overture de la ceremonia, gran final del Balón y cabecera del acta. Existe un logo por categoría (olivada, mensaje/puskas, equipo/mejor5, entrenador, Mr Parley) que preside la intro de cada escena.
 
 ## Colors
 
@@ -189,6 +190,7 @@ Esquinas rectas en todo el sistema (radius 0): el lenguaje es el rectángulo imp
 
 ### Do:
 - **Do** usar dobles filetes (border + inner inset 5px) para todo contenedor impreso.
+- **Do** usar el logo didone salvia como marca (portada, overture, finales); el texto tipográfico foil es el fallback cuando no hay logo de esa categoría.
 - **Do** reservar el foil para lo premiado y los sellos; el resto en tinta.
 - **Do** hundir los controles al pulsar (plate-press invertido + translateY(1px)).
 - **Do** escribir el sabor ceremonial en francés (labels de escena, "par décision du comité") y el cuerpo en español.
