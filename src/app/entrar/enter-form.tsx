@@ -35,7 +35,7 @@ export function EnterForm({ members }: { members: MemberOption[] }) {
       }
       const data = (await response.json().catch(() => null)) as { error?: string } | null;
       if (response.status === 401) {
-        setError("Código incorrecto. Pídelo de nuevo al capitán de la soirée.");
+        setError("Código incorrecto. Pídelo de nuevo al capitán de la gala.");
       } else if (response.status === 429) {
         setError("Demasiados intentos. Espera un momento antes de volver a tocar.");
       } else {
@@ -57,7 +57,7 @@ export function EnterForm({ members }: { members: MemberOption[] }) {
           className="font-display font-bold uppercase text-foil"
           style={{ fontSize: "clamp(1.9rem, 8vw, 2.8rem)", letterSpacing: "0.06em" }}
         >
-          Entrer à la soirée
+          Entrar en la gala
         </h1>
         <p className="max-w-[40ch] text-[14px] leading-relaxed text-ink-soft">
           Presenta el código de invitación y firma el registro de la peña para
@@ -70,7 +70,7 @@ export function EnterForm({ members }: { members: MemberOption[] }) {
           htmlFor="gala-code"
           className="caps-line font-caps text-[11px] text-ink"
         >
-          Code de la soirée
+          Código de la gala
         </label>
         <input
           id="gala-code"
@@ -87,7 +87,7 @@ export function EnterForm({ members }: { members: MemberOption[] }) {
       <DiamondDivider className="text-ink-faint" />
 
       <section className="flex flex-1 flex-col gap-4" aria-label="Registro de la peña">
-        <p className="caps-line font-caps text-[11px] text-ink">Registre de la peña</p>
+        <p className="caps-line font-caps text-[11px] text-ink">Registro de la peña</p>
         {error ? (
           <p
             role="alert"

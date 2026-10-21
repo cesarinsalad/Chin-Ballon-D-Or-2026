@@ -32,8 +32,8 @@ type RevealGroup = {
 };
 
 function positionLabel(position: number): string {
-  if (position === 1) return "1er prix";
-  return `${position}e place`;
+  if (position === 1) return "Primer premio";
+  return `${position}º puesto`;
 }
 
 function buildGroups(category: CeremonyCategory): RevealGroup[] {
@@ -99,7 +99,7 @@ function buildGroups(category: CeremonyCategory): RevealGroup[] {
         messageText: null,
         messageAt: null,
         isMember: entry.memberId !== null,
-        stats: ["par décision du comité"],
+        stats: ["por decisión del comité"],
       };
       const group = groups.get(entry.rankPosition) ?? {
         position: entry.rankPosition,
@@ -307,10 +307,10 @@ export function CeremonyPlayer({
               />
             </h1>
             <p className="caps-line font-caps text-[10px] text-ivory/80">
-              Première Cérémonie · Saison 2026
+              Primera Edición · Temporada 2025/2026
             </p>
             <p className="max-w-[40ch] text-[14px] leading-relaxed text-ivory/70 italic">
-              Toca el escenario para alzar el rideau. La salle garde le silence —
+              Toca el escenario para alzar el telón. La sala guarda silencio —
               silencia el móvil y déjate llevar.
             </p>
           </motion.section>
@@ -323,7 +323,7 @@ export function CeremonyPlayer({
             className="relative z-10 flex flex-1 flex-col items-center justify-center gap-6 px-8 py-20 text-center"
           >
             <p className="caps-line font-caps text-[10px] text-foil-bright">
-              Numéro {sceneIndex + 1} · {voters} votants
+              Número {sceneIndex + 1} · {voters} votantes
             </p>
             <h2>
               {sceneLogo ? (
@@ -350,11 +350,11 @@ export function CeremonyPlayer({
             ) : null}
             {scene.category.kind !== "ceremonial" ? (
               <p className="caps-line-tight font-caps text-[10px] text-ivory/60">
-                Les nominés
+                Los nominados
               </p>
             ) : (
               <p className="caps-line-tight font-caps text-[10px] text-ivory/60">
-                Prix du comité · sans votation
+                Premio del comité · sin votación
               </p>
             )}
             {scene.category.key === "puskas" || scene.category.key === "olivada" ? (
@@ -395,7 +395,7 @@ export function CeremonyPlayer({
                 {isWinnerStep && !envelopeOpen ? (
                   <>
                     <p className="caps-line font-caps text-[11px] text-ivory/70">
-                      Et le lauréat est…
+                      Y el ganador es…
                     </p>
                     <Envelope open={false} />
                   </>
@@ -403,7 +403,7 @@ export function CeremonyPlayer({
                   <>
                     <p className="caps-line font-caps text-[10px] text-foil-bright">
                       {group.label}
-                      {group.exAequo ? " · ex æquo" : ""}
+                      {group.exAequo ? " · empate" : ""}
                     </p>
                     {group.entries.map((entry) => (
                       <motion.article
@@ -493,17 +493,17 @@ export function CeremonyPlayer({
             {...fade}
             className="relative z-10 flex flex-1 flex-col items-center justify-center gap-7 px-8 py-16 text-center"
           >
-            <p className="caps-line font-caps text-[10px] text-foil-bright">Rideau</p>
+            <p className="caps-line font-caps text-[10px] text-foil-bright">Telón</p>
             <h2
               className="font-display font-bold uppercase text-ivory"
               style={{ fontSize: "clamp(1.9rem, 8.5vw, 3rem)", letterSpacing: "0.05em" }}
             >
               Fin de la
               <br />
-              Première Cérémonie
+              Primera Ceremonia
             </h2>
             <p className="max-w-[42ch] text-[14px] leading-relaxed text-ivory/70 italic">
-              Merci à toute la peña. Los sobres viajan al archivo y las cifras,
+              Gracias a toda la peña. Los sobres viajan al archivo y las cifras,
               al acta oficial.
             </p>
             <div className="flex w-full max-w-[420px] flex-col gap-3">
@@ -525,7 +525,7 @@ export function CeremonyPlayer({
               />
             </div>
             <p className="caps-line-tight font-caps text-[9px] text-ivory/50">
-              Chin Ballon d&apos;Or · à l&apos;année prochaine
+              Chin Ballon d&apos;Or · hasta el año que viene
             </p>
           </motion.section>
         ) : null}

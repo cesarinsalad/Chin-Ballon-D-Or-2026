@@ -42,7 +42,7 @@ type Category = {
 };
 
 const CATEGORY_BLURB: Record<string, string> = {
-  balon: "Elige tu top 3. El 1er puesto vale 5 puntos, el 2º vale 3 y el 3º vale 1. Autovoto permitido.",
+  balon: "Elige tu top 3. El 1º puesto vale 5 puntos, el 2º vale 3 y el 3º vale 1. Autovoto permitido.",
   puskas: "Los cuatro mensajes nominados por el capitán. Ránkealos: 5, 3 y 1 punto.",
   olivada: "Fantasmas y fastameadas del año. Ránkealos: 5, 3 y 1 punto.",
   mejor5: "Marca a los cinco que forman el equipo ideal del año. Un punto por aparición.",
@@ -207,7 +207,7 @@ function BallotWizardInner({
           La votación se cerró
         </h1>
         <p className="max-w-[40ch] text-[15px] leading-relaxed text-ink-soft">
-          Tu papeleta incompleta se queda en el vestíbulo. La cérémonie decidirá el
+          Tu papeleta incompleta se queda en el vestíbulo. La ceremonia decidirá el
           resto con los votos sellados.
         </p>
         <CouponLink label="Volver a la portada" href="/" invert={false} className="max-w-[380px]" />
@@ -220,11 +220,11 @@ function BallotWizardInner({
       <div className="mx-auto flex w-full max-w-[520px] flex-1 flex-col items-center justify-center gap-6 p-8 text-center">
         <EmbossSeal label="Papeleta sellada" />
         <h1 className="font-display text-2xl font-bold uppercase tracking-wide text-ink">
-          Papelette complète
+          Papeleta completa
         </h1>
         <p className="max-w-[42ch] text-[15px] leading-relaxed text-ink-soft">
           {voterName}, tus cuatro categorías viajan selladas en el cajón del
-          teatro. Que ruede el rideau.
+          teatro. Que suba el telón.
         </p>
         <CouponLink label="Volver a la portada" href="/" invert={false} className="max-w-[380px]" />
       </div>

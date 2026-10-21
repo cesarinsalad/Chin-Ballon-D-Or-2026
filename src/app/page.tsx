@@ -27,18 +27,18 @@ export default async function Portada() {
   let secondary: { href: string; label: string } | null = null;
 
   if (settings.revealActive) {
-    noticeTitle = "La Cérémonie";
+    noticeTitle = "La ceremonia";
     noticeSub = "Los sobres aguardan sobre la mesa. Toma asiento.";
     coupon = { href: "/gala", label: "Asistir a la ceremonia", sub: "Reproducción individual" };
-    secondary = { href: "/acta", label: "Acte Officiel — cifras de la votación" };
+    secondary = { href: "/acta", label: "Acta oficial — cifras de la votación" };
   } else if (settings.votingOpen) {
     noticeTitle = "Las votaciones están abiertas.";
-    noticeSub = "Sella tu papeleta con el código de la soirée.";
+    noticeSub = "Sella tu papeleta con el código de la gala.";
     if (!session) {
       coupon = { href: "/entrar", label: "Entrar a la gala", sub: "Código de invitación" };
     } else if (ballotComplete) {
       coupon = null;
-      noticeSub = "Tu papeleta está completa y sellada. Rideau bientôt.";
+      noticeSub = "Tu papeleta está completa y sellada. El telón cae pronto.";
     } else {
       coupon = { href: "/votar", label: "Continuar tu papeleta", sub: `${progress.length} de 4 categorías selladas` };
     }
@@ -113,13 +113,13 @@ export default async function Portada() {
           <div className="flex w-full flex-col items-center gap-3">
             <DiamondDivider className="w-full max-w-[240px] text-ink-faint" />
             <p className="text-[11px] italic text-ink-faint">
-              Sur invitation uniquement · Théâtre du Chinparley
+              Solo invitados · Teatro del Chinparley
             </p>
             <Link
               href="/admin"
               className="text-[10px] tracking-[0.3em] text-ink-faint/70 uppercase transition-colors hover:text-ink-soft"
             >
-              Bureau du capitaine
+              Oficina del capitán
             </Link>
           </div>
         </div>

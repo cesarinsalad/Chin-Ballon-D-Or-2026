@@ -6,7 +6,7 @@ import { connection } from "next/server";
 
 export const instant = false;
 export const metadata = {
-  title: "Bureau du capitaine — Chin Ballon d'Or",
+  title: "Oficina del capitán — Chin Ballon d'Or",
 };
 
 export default async function AdminPage() {

@@ -24,7 +24,7 @@ const sourceSerif = Source_Serif_4({
 
 export const metadata: Metadata = {
   title: "Chin Ballon d'Or",
-  description: "La première cérémonie annuelle du chinparley.",
+  description: "La ceremonia anual del chinparley.",
   robots: { index: false, follow: false },
 };
 

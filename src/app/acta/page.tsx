@@ -10,7 +10,7 @@ import { connection } from "next/server";
 
 export const instant = false;
 export const metadata = {
-  title: "Acte Officiel — Chin Ballon d'Or",
+  title: "Acta oficial — Chin Ballon d'Or",
 };
 
 function pct(part: number, total: number): string {
@@ -34,7 +34,7 @@ export default async function ActaPage() {
             El acta aguarda
           </h1>
           <p className="max-w-[40ch] text-[15px] leading-relaxed text-ink-soft">
-            Las cifras se imprimen cuando el rideau caiga y la cérémonie termine.
+            Las cifras se imprimen cuando el telón caiga y la ceremonia termine.
           </p>
           <Link
             href="/"
@@ -61,13 +61,13 @@ export default async function ActaPage() {
               className="font-display font-bold uppercase text-foil-ink"
               style={{ fontSize: "clamp(1.8rem, 8vw, 2.6rem)", letterSpacing: "0.05em" }}
             >
-              Acte Officiel
+              Acta oficial
             </h1>
             <p
               className="caps-line font-caps text-[11px] text-ink"
               style={{ textWrap: "balance" }}
             >
-              Distribution des Prix · Saison 2026
+              Distribución de premios · Temporada 2025/2026
             </p>
             <DiamondDivider className="w-full max-w-[220px] text-ink-faint" />
             <p className="max-w-[52ch] text-[13px] leading-relaxed text-ink-soft italic">
@@ -78,9 +78,9 @@ export default async function ActaPage() {
           </header>
 
           <section className="rule-double-b border-b border-ink pb-4" aria-label="Participación">
-            <p className="caps-line font-caps text-[11px] text-ink">Les electeurs</p>
+            <p className="caps-line font-caps text-[11px] text-ink">Los electores</p>
             <p className="tabular mt-2 text-[13px] text-ink-soft">
-              {turnout.totalMembers} electeurs inscrits ·
+              {turnout.totalMembers} electores inscritos ·
               {" "}
               {categories
                 .map((category) => `${category.ballotsCount}`)
@@ -116,10 +116,10 @@ export default async function ActaPage() {
                         Pts
                       </th>
                       <th scope="col" className="py-2 pr-2 text-right font-caps text-[10px] tracking-[0.18em] text-ink-soft uppercase">
-                        1ers
+                        1º
                       </th>
                       <th scope="col" className="py-2 pr-2 text-right font-caps text-[10px] tracking-[0.18em] text-ink-soft uppercase">
-                        2es
+                        2º
                       </th>
                       <th scope="col" className="py-2 text-right font-caps text-[10px] tracking-[0.18em] text-ink-soft uppercase">
                         % papeletas
@@ -147,7 +147,7 @@ export default async function ActaPage() {
                               {tally.nominee.memberName ?? tally.nominee.authorName ?? "—"}
                               {tally.tied ? (
                                 <span className="text-[11px] italic text-ink-faint">
-                                  ex æquo
+                                  empate
                                 </span>
                               ) : null}
                             </span>
@@ -258,7 +258,7 @@ export default async function ActaPage() {
                           {entry.memberName ?? entry.authorName ?? "—"}
                         </span>
                         <span className="ml-auto text-[11px] italic text-ink-faint">
-                          par décision du comité
+                          por decisión del comité
                         </span>
                       </li>
                     ) : null,
@@ -271,7 +271,7 @@ export default async function ActaPage() {
           <footer className="flex flex-col items-center gap-3 pt-2 pb-6 text-center">
             <DiamondDivider className="w-full max-w-[220px] text-ink-faint" />
             <p className="caps-line-tight font-caps text-[10px] text-ink-soft">
-              Acte clos et scellé · Chin Ballon d&apos;Or
+              Acta cerrada y sellada · Chin Ballon d&apos;Or
             </p>
             <Link
               href="/"

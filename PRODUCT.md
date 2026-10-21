@@ -26,7 +26,7 @@ Es una "gala" completa, no una encuesta: flujo de dos actos (votación sellada y
 
 - Acto 1: el capitán abre la votación desde el admin; los amigos entran con un código de grupo compartido por WhatsApp y eligen su nombre; la papeleta es ciega (sin resultados) y blindada (un voto por categoría, sin edición).
 - Acto 2: el capitán cierra la votación y activa la gala; cada amigo reproduce la ceremonia en su dispositivo cuando quiera; al final accede al Acta Oficial con estadísticas anónimas.
-- La voz del producto es español con acentos ceremoniales en francés; tono paródico de gala de lujo.
+- La voz del producto es español en toda la copia visible (botones, ceremonia, acta, admin); el único elemento en francés es el nombre de marca "Chin Ballon d'Or", impreso también en los logos. Tono: paródico de gala de lujo.
 
 ## Capabilities and Constraints
 

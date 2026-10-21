@@ -25,10 +25,10 @@ export default async function EntrarPage() {
         <RuleFrame className="m-3 flex-1 sm:m-5" innerClassName="flex flex-col items-center justify-center gap-6 p-8 text-center">
           <BallVignette className="h-14 w-28 text-ink-soft" />
           <h1 className="font-display text-3xl font-bold uppercase tracking-wide text-ink">
-            Les votations sont closes
+            La votación está cerrada
           </h1>
           <p className="max-w-[38ch] text-[15px] leading-relaxed text-ink-soft">
-            La papeleta ya está guardada en el cajón del teatro. La cérémonie se
+            La papeleta ya está guardada en el cajón del teatro. La ceremonia se
             prepara.
           </p>
           <Link

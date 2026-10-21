@@ -134,7 +134,7 @@ export function AdminPanel() {
         setCodeDraft(payload.settings.groupCode);
       })
       .catch(() => {
-        if (active) setError("No se pudo leer el bureau. Revisa tu conexión.");
+        if (active) setError("No se pudo leer la oficina. Revisa tu conexión.");
       });
     return () => {
       active = false;
@@ -206,7 +206,7 @@ export function AdminPanel() {
     return (
       <div className="flex flex-1 items-center justify-center py-24">
         <p className="text-[13px] italic text-ink-soft">
-          {error ?? "Abriendo los registros del bureau…"}
+          {error ?? "Abriendo los registros del capitán…"}
         </p>
       </div>
     );
@@ -224,14 +224,14 @@ export function AdminPanel() {
     <div className="mx-auto flex w-full max-w-[640px] flex-1 flex-col gap-5 px-4 py-6 sm:px-8">
       <header className="flex flex-col items-center gap-3 text-center">
         <h1 className="font-display text-[24px] font-bold uppercase tracking-[0.05em] text-ink">
-          Bureau du capitaine
+          Oficina del capitán
         </h1>
         <p className="text-[12px] italic text-ink-soft">
-          La oficina de producción de la soirée · Saison 2026
+          La oficina de producción de la gala · Temporada 2025/2026
         </p>
       </header>
 
-      <nav className="flex flex-wrap justify-center gap-2" aria-label="Secciones del bureau">
+      <nav className="flex flex-wrap justify-center gap-2" aria-label="Secciones de la oficina">
         {tabs.map((item) => (
           <button
             key={item.id}
@@ -279,7 +279,7 @@ export function AdminPanel() {
       {tab === "etat" ? (
         <section className="flex flex-col gap-5" aria-label="Estado del evento">
           <div className="flex flex-col gap-3">
-            <p className="caps-line font-caps text-[10px] text-ink">Code de la soirée</p>
+            <p className="caps-line font-caps text-[10px] text-ink">Código de la gala</p>
             <div className="flex gap-2">
               <input
                 value={codeDraft ?? ""}
@@ -309,7 +309,7 @@ export function AdminPanel() {
           <DiamondDivider className="text-ink-faint" />
 
           <div className="flex flex-col gap-3">
-            <p className="caps-line font-caps text-[10px] text-ink">Les votations</p>
+            <p className="caps-line font-caps text-[10px] text-ink">La votación</p>
             {confirmVoting ? (
               <div className="grid grid-cols-2 gap-2">
                 <Coupon
@@ -354,12 +354,12 @@ export function AdminPanel() {
           <DiamondDivider className="text-ink-faint" />
 
           <div className="flex flex-col gap-3">
-            <p className="caps-line font-caps text-[10px] text-ink">La Cérémonie</p>
+            <p className="caps-line font-caps text-[10px] text-ink">La ceremonia</p>
             {confirmReveal ? (
               <div className="flex flex-col gap-3">
                 <p className="text-center text-[12px] italic text-ink-soft">
                   Activar la gala cierra las votaciones y abre la revelación para
-                  toda la peña. ¿Alzamos el rideau?
+                  toda la peña. ¿Alzamos el telón?
                 </p>
                 <div className="grid grid-cols-2 gap-2">
                   <Coupon action={() => setConfirmReveal(false)} label="Cancelar" invert={false} />
@@ -374,7 +374,7 @@ export function AdminPanel() {
                           }),
                         data.settings.revealActive
                           ? "Gala desactivada. Los resultados vuelven al sobre."
-                          : "Rideau alzado. La ceremonia está disponible.",
+                          : "Telón alzado. La ceremonia está disponible.",
                       );
                     }}
                     label="Confirmar"
@@ -386,8 +386,8 @@ export function AdminPanel() {
                 action={() => setConfirmReveal(true)}
                 label={
                   data.settings.revealActive
-                    ? "Gala activa — bajar el rideau"
-                    : "Alzar el rideau — activar la gala"
+                    ? "Gala activa — bajar el telón"
+                    : "Alzar el telón — activar la gala"
                 }
                 sub={
                   data.settings.revealActive
@@ -755,7 +755,7 @@ export function AdminPanel() {
         <section className="flex flex-col gap-4" aria-label="Votos en vivo">
           <p className="text-center text-[12px] italic text-ink-soft">
             {data.turnout.totalBallots} papeletas selladas en total · las cifras
-            viven aquí hasta el rideau.
+            viven aquí hasta el telón.
           </p>
           {data.members.map((member) => (
             <article
@@ -812,7 +812,7 @@ export function AdminPanel() {
                       </span>
                       {entry.points !== undefined ? (
                         <span className="ml-auto">
-                          {entry.points} pts · {entry.firsts} 1ers
+                          {entry.points} pts · {entry.firsts} primeros
                         </span>
                       ) : null}
                       {entry.votes !== undefined ? (
@@ -851,7 +851,7 @@ export function AdminPanel() {
           }
           className="text-[10px] tracking-[0.3em] text-ink-faint/70 uppercase transition-colors hover:text-ink-soft"
         >
-          Cerrar el bureau
+          Cerrar la oficina
         </button>
       </footer>
     </div>

@@ -59,7 +59,7 @@ export function Monogram({
 }
 
 export function rankLabel(rank: number): string {
-  if (rank === 1) return "1er";
+  if (rank === 1) return "1º";
   if (rank === 2) return "2do";
   return "3ro";
 }

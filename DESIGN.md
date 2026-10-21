@@ -116,7 +116,7 @@ Paleta de imprenta de lujo: dos tintas (marfil y negra) más un oro apagado de e
 **Body Font:** Source Serif 4 (fallback serif) — serif de trabajo legible en móvil.
 **Label Font:** Cinzel (fallback serif) — versalitas de cobregrabado, siempre en uppercase con tracking 0.14–0.42em.
 
-**Character:** Contraste didone/tinta que evoca programa de teatro impreso; la itálica Bodoni lleva el tono snob francés ("La nuit la plus prestigieuse du chinparley").
+**Character:** Contraste didone/tinta que evoca programa de teatro impreso; la itálica Bodoni lleva las líneas de sabor ("La velada más prestigiosa del año...").
 
 ### Hierarchy
 - **Display** (700, clamp(2.6rem, 12vw, 4.6rem), 1.04): solo el wordmark "CHIN BALLON D'OR".
@@ -193,7 +193,7 @@ Esquinas rectas en todo el sistema (radius 0): el lenguaje es el rectángulo imp
 - **Do** usar el logo didone salvia como marca (portada, overture, finales); el texto tipográfico foil es el fallback cuando no hay logo de esa categoría.
 - **Do** reservar el foil para lo premiado y los sellos; el resto en tinta.
 - **Do** hundir los controles al pulsar (plate-press invertido + translateY(1px)).
-- **Do** escribir el sabor ceremonial en francés (labels de escena, "par décision du comité") y el cuerpo en español.
+- **Do** escribir toda la copia en español ("Y el ganador es…", "por decisión del comité", "3º puesto", "Telón"); el único francés es el nombre de marca "Chin Ballon d'Or".
 - **Do** respetar prefers-reduced-motion: MotionConfig reducedMotion="user" + gate en el confeti.
 
 ### Don't:

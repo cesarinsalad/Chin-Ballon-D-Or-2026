@@ -8,7 +8,7 @@ import { connection } from "next/server";
 
 export const instant = false;
 export const metadata = {
-  title: "La Cérémonie — Chin Ballon d'Or",
+  title: "La ceremonia — Chin Ballon d'Or",
 };
 
 export default async function GalaPage() {
@@ -24,10 +24,10 @@ export default async function GalaPage() {
         <RuleFrame className="m-3 flex-1 sm:m-5" innerClassName="flex flex-1 flex-col items-center justify-center gap-6 p-8 text-center">
           <BallVignette className="h-14 w-28 text-ink-soft" />
           <h1 className="font-display text-2xl font-bold uppercase tracking-wide text-ink">
-            La cérémonie no ha comenzado
+            La ceremonia no ha comenzado
           </h1>
           <p className="max-w-[40ch] text-[15px] leading-relaxed text-ink-soft">
-            El telón sigue bajado. Vuelve cuando el capitán alce el rideau y la
+            El telón sigue bajado. Vuelve cuando el capitán alce el telón y la
             sala se apague.
           </p>
           <Link
