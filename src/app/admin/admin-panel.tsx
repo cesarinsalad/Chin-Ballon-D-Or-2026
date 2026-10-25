@@ -128,6 +128,21 @@ function mediaPathname(nomineeId: number, file: File): string {
   return `nominees/mensaje-${nomineeId}-${Date.now()}.${extension || "bin"}`;
 }
 
+function createStallWatchdog(onStall: () => void) {
+  let lastProgressAt = Date.now();
+  const interval = setInterval(() => {
+    if (Date.now() - lastProgressAt > 30_000) onStall();
+  }, 1_000);
+  return {
+    tick() {
+      lastProgressAt = Date.now();
+    },
+    stop() {
+      clearInterval(interval);
+    },
+  };
+}
+
 export function AdminPanel() {
   const [data, setData] = useState<AdminData | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -141,6 +156,7 @@ export function AdminPanel() {
   const [confirmVoting, setConfirmVoting] = useState(false);
   const [newMemberName, setNewMemberName] = useState("");
   const [reloadKey, setReloadKey] = useState(0);
+  const [uploadPct, setUploadPct] = useState<{ nomineeId: number; pct: number } | null>(null);
   const photoInputRef = useRef<HTMLInputElement>(null);
   const photoTargetRef = useRef<number | null>(null);
   const mediaInputRef = useRef<HTMLInputElement>(null);
@@ -232,19 +248,55 @@ export function AdminPanel() {
     setError(null);
     try {
       if (data?.blobEnabled) {
-        const blob = await upload(mediaPathname(nomineeId, file), file, {
-          access: "public",
-          handleUploadUrl: "/api/admin/media",
-          contentType: file.type,
-          multipart: file.size > 8 * 1024 * 1024,
-        });
-        const failure = await call(`/api/admin/nominees/${nomineeId}`, "PATCH", {
-          mediaUrl: blob.url,
-          mediaType: file.type,
-        });
-        if (failure) setError(failure);
-        else await refreshDone();
-        return;
+        const abortController = new AbortController();
+        const watchdog = createStallWatchdog(() => abortController.abort());
+        let lastPct = 0;
+        try {
+          setUploadPct({ nomineeId, pct: 0 });
+          const blob = await upload(mediaPathname(nomineeId, file), file, {
+            access: "public",
+            handleUploadUrl: "/api/admin/media",
+            contentType: file.type,
+            abortSignal: abortController.signal,
+            onUploadProgress: (event) => {
+              watchdog.tick();
+              if (event && event.total > 0) {
+                lastPct = Math.min(99, Math.round((event.loaded / event.total) * 100));
+              } else {
+                lastPct = Math.min(99, lastPct + 2);
+              }
+              setUploadPct({ nomineeId, pct: lastPct });
+            },
+          });
+          const failure = await call(`/api/admin/nominees/${nomineeId}`, "PATCH", {
+            mediaUrl: blob.url,
+            mediaType: file.type,
+          });
+          if (failure) setError(failure);
+          else await refreshDone();
+          return;
+        } catch (uploadError) {
+          if (uploadError instanceof Error && uploadError.name === "AbortError") {
+            setError(
+              "La subida se estancó (red inestable) y se canceló. Inténtalo de nuevo; si persiste, prueba con un video más corto o desde el ordenador.",
+            );
+            return;
+          }
+          if (
+            uploadError instanceof Error &&
+            /maximumSizeInBytes|too large|entity/i.test(uploadError.message)
+          ) {
+            setError("El archivo supera el máximo de 60 MB.");
+            return;
+          }
+          setError(
+            "La subida falló. Comprueba tu conexión e inténtalo de nuevo.",
+          );
+          return;
+        } finally {
+          watchdog.stop();
+          setUploadPct(null);
+        }
       }
       if (file.size > 2_300_000) {
         setError(
@@ -704,13 +756,19 @@ export function AdminPanel() {
                       <div className="flex flex-wrap items-center gap-2">
                         <button
                           type="button"
+                          disabled={uploadPct !== null}
                           onClick={() => {
+                            if (uploadPct !== null) return;
                             mediaTargetRef.current = nominee.id;
                             mediaInputRef.current?.click();
                           }}
-                          className="plate-press border border-ink/50 bg-ivory px-3 py-1.5 font-caps text-[10px] tracking-[0.14em] text-ink-soft uppercase"
+                          className="plate-press border border-ink/50 bg-ivory px-3 py-1.5 font-caps text-[10px] tracking-[0.14em] text-ink-soft uppercase disabled:opacity-60"
                         >
-                          {nominee.mediaUrl ? "Cambiar la media" : "Adjuntar video/gif"}
+                          {uploadPct?.nomineeId === nominee.id
+                            ? `Subiendo… ${uploadPct.pct}%`
+                            : nominee.mediaUrl
+                              ? "Cambiar la media"
+                              : "Adjuntar video/gif"}
                         </button>
                         {nominee.mediaUrl ? (
                           <button
