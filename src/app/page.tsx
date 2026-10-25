@@ -73,7 +73,7 @@ export default async function Portada() {
               Primera Edición · Temporada 2025/2026
             </p>
             <p className="max-w-[42ch] font-display text-[15px] italic leading-relaxed text-ink-soft">
-              La velada más prestigiosa del año. La celebración de los momentos más destacados del grupo.
+              Una celebración a los momentos más destacados del grupo.
             </p>
           </div>
 
