@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import { getCeremonyData } from "@/lib/event";
-import { getVoterSession } from "@/lib/session";
+import { getVoterSession, isAdminSession } from "@/lib/session";
 import { BallVignette, DiamondDivider, RuleFrame } from "@/components/ornaments";
 import { Monogram } from "@/components/monogram";
 import { mainLogo } from "@/components/logos";
@@ -21,11 +21,12 @@ function pct(part: number, total: number): string {
 export default async function ActaPage() {
   await connection();
   const session = await getVoterSession();
-  if (!session) redirect("/entrar");
+  const adminPreview = await isAdminSession();
+  if (!session && !adminPreview) redirect("/entrar");
 
   const { settings, categories, turnout } = await getCeremonyData();
 
-  if (!settings.revealActive) {
+  if (!settings.revealActive && !adminPreview) {
     return (
       <main className="paper relative flex min-h-dvh flex-col">
         <RuleFrame className="m-3 flex-1 sm:m-5" innerClassName="flex flex-1 flex-col items-center justify-center gap-6 p-8 text-center">
@@ -69,6 +70,14 @@ export default async function ActaPage() {
             >
               Distribución de premios · Temporada 2025/2026
             </p>
+            {settings.revealActive ? null : (
+              <p
+                aria-label="Vista previa — solo visible para el capitán"
+                className="caps-line-tight border border-ink/50 px-2 py-1 font-caps text-[9px] tracking-[0.2em] text-ink-soft uppercase"
+              >
+                Vista previa · el telón sigue bajado
+              </p>
+            )}
             <DiamondDivider className="w-full max-w-[220px] text-ink-faint" />
             <p className="max-w-[52ch] text-[13px] leading-relaxed text-ink-soft italic">
               Cifras agregadas de la votación. Las papeletas individuales

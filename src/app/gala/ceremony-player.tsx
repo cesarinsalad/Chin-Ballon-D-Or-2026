@@ -188,9 +188,11 @@ function SoundToggle({ muted, onToggle }: { muted: boolean; onToggle: () => void
 export function CeremonyPlayer({
   categories,
   turnout,
+  preview = false,
 }: {
   categories: CeremonyCategory[];
   turnout: { totalMembers: number; votersPerCategory: Record<string, number> };
+  preview?: boolean;
 }) {
   const [sceneIndex, setSceneIndex] = useState(-1);
   const [phase, setPhase] = useState<"overture" | "intro" | "reveal" | "curtain">("overture");
@@ -290,6 +292,14 @@ export function CeremonyPlayer({
           ))}
         </span>
         <div className="flex items-center gap-3" onClick={(event) => event.stopPropagation()}>
+          {preview ? (
+            <p
+              aria-label="Vista previa — solo visible para el capitán"
+              className="caps-line-tight border border-ivory/40 px-2 py-1 font-caps text-[9px] tracking-[0.2em] text-foil-bright uppercase"
+            >
+              Vista previa
+            </p>
+          ) : null}
           <SoundToggle muted={muted} onToggle={toggleMute} />
           <Link
             href="/"

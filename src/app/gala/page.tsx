@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCeremonyData } from "@/lib/event";
-import { getVoterSession } from "@/lib/session";
+import { getVoterSession, isAdminSession } from "@/lib/session";
 import { BallVignette, RuleFrame } from "@/components/ornaments";
 import { CeremonyPlayer } from "./ceremony-player";
 import { connection } from "next/server";
@@ -14,11 +14,12 @@ export const metadata = {
 export default async function GalaPage() {
   await connection();
   const session = await getVoterSession();
-  if (!session) redirect("/entrar");
+  const adminPreview = await isAdminSession();
+  if (!session && !adminPreview) redirect("/entrar");
 
   const { settings, categories, turnout } = await getCeremonyData();
 
-  if (!settings.revealActive) {
+  if (!settings.revealActive && !adminPreview) {
     return (
       <main className="paper relative flex min-h-dvh flex-col">
         <RuleFrame className="m-3 flex-1 sm:m-5" innerClassName="flex flex-1 flex-col items-center justify-center gap-6 p-8 text-center">
@@ -41,5 +42,11 @@ export default async function GalaPage() {
     );
   }
 
-  return <CeremonyPlayer categories={categories} turnout={turnout} />;
+  return (
+    <CeremonyPlayer
+      categories={categories}
+      turnout={turnout}
+      preview={adminPreview && !settings.revealActive}
+    />
+  );
 }

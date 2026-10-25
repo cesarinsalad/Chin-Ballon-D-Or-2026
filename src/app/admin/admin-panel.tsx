@@ -565,6 +565,19 @@ export function AdminPanel() {
                 invert={!data.settings.revealActive}
               />
             )}
+            <div className="flex flex-col items-center gap-1">
+              <a
+                href="/gala"
+                target="_blank"
+                rel="noopener"
+                className="caps-line-tight font-caps text-[11px] text-ink underline decoration-foil decoration-1 underline-offset-[6px]"
+              >
+                Ver la gala — vista previa
+              </a>
+              <p className="text-[11px] italic text-ink-faint">
+                Solo tú la ves en esta pestaña. La peña sigue esperando el telón.
+              </p>
+            </div>
           </div>
         </section>
       ) : null}
