@@ -14,6 +14,8 @@ export type PublicNominee = {
   authorName: string | null;
   messageText: string | null;
   messageAt: string | null;
+  mediaUrl: string | null;
+  mediaType: string | null;
   rankPosition: number | null;
 };
 
@@ -71,6 +73,8 @@ function toPublicNominee(nominee: Nominee, memberById: Map<number, Member>): Pub
     authorName: nominee.authorName,
     messageText: nominee.messageText,
     messageAt: nominee.messageAt,
+    mediaUrl: nominee.mediaUrl,
+    mediaType: nominee.mediaType,
     rankPosition: nominee.rankPosition,
   };
 }

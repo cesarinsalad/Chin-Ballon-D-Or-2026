@@ -1,6 +1,13 @@
 import { and, asc, eq, inArray, max } from "drizzle-orm";
+import { del } from "@vercel/blob";
 import { db } from "@/db";
 import { ballots, ballotPicks, categories, members, nominees, settings } from "@/db/schema";
+import { blobConfigured, isBlobUrl, validateMedia } from "./media";
+
+async function removeBlobQuietly(url: string | null | undefined) {
+  if (!blobConfigured() || !isBlobUrl(url)) return;
+  await del(url as string).catch(() => undefined);
+}
 
 export async function syncAutoNominees() {
   const [memberRows, autoCategories] = await Promise.all([
@@ -82,19 +89,27 @@ export async function deleteNominee(nomineeId: number): Promise<string | null> {
   )[0];
   if (hasVotes) return "Ya recibió votos. No se puede eliminar.";
   await db().delete(nominees).where(eq(nominees.id, nomineeId));
+  await removeBlobQuietly(nominee?.mediaUrl);
   return null;
 }
 
 export async function addMessageNominee(input: {
   categoryKey: string;
   authorName: string;
-  messageText: string;
+  messageText: string | null;
   messageAt: string | null;
+  mediaUrl: string | null;
+  mediaType: string | null;
 }): Promise<string | null> {
   const category = (
     await db().select().from(categories).where(eq(categories.key, input.categoryKey))
   )[0];
   if (!category) return "Categoría no encontrada.";
+  if (!input.messageText && !input.mediaUrl) {
+    return "El mensaje necesita texto o media adjunta.";
+  }
+  const mediaError = validateMedia(input.mediaUrl, input.mediaType);
+  if (mediaError) return mediaError;
   const [{ value: maxPosition }] = await db()
     .select({ value: max(nominees.position) })
     .from(nominees)
@@ -104,6 +119,8 @@ export async function addMessageNominee(input: {
     authorName: input.authorName,
     messageText: input.messageText,
     messageAt: input.messageAt,
+    mediaUrl: input.mediaUrl,
+    mediaType: input.mediaType,
     position: (maxPosition ?? -1) + 1,
   });
   return null;
@@ -255,11 +272,14 @@ export async function getAdminData() {
           authorName: nominee.authorName,
           messageText: nominee.messageText,
           messageAt: nominee.messageAt,
+          mediaUrl: nominee.mediaUrl,
+          mediaType: nominee.mediaType,
           rankPosition: nominee.rankPosition,
         })),
     })),
     turnout: {
       totalBallots: ballotRows.length,
     },
+    blobEnabled: blobConfigured(),
   };
 }

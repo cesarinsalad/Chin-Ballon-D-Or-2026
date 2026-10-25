@@ -164,8 +164,13 @@ Esquinas rectas en todo el sistema (radius 0): el lenguaje es el rectángulo imp
 
 ### ChatBubble (mensaje nominado)
 - **Shape:** cartucho recto con doble filete (border + inner inset 3px).
-- **Anatomy:** firma (Cinzel 11px caps, tinta suave) + fecha itálica 11px a la derecha; texto Source Serif 14-15px.
+- **Anatomy:** firma (Cinzel 11px caps, tinta suave) + fecha itálica 11px a la derecha; texto Source Serif 14-15px. Texto opcional: el mensaje puede ser solo media.
 - **Padding:** 16px 20px (compact: 12px 16px).
+
+### MediaFrame (media adjunta)
+- **Shape:** marco recto con doble filete sobre fondo platea (`bg-stage`) que contrasta con el contenido.
+- **Contenido:** `<video>` nativo con controles (sin autoplay, gif/imágenes como `<img>`); altura con tope (170px compacto, 300px placa); el media vive DENTRO de la burbuja del mensaje nominado y de la placa del ganador.
+- **Storage:** ficheros en Vercel Blob (URL https); en local sin token, data-URL ≤3MB en BD.
 
 ### RuleFrame (contenedor de página)
 - **Shape:** doble filete perimetral (border ink + inner border 70% a 5px).

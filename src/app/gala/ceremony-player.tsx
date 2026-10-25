@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { CeremonyCategory } from "@/lib/event";
 import { ChatBubble } from "@/components/chat-bubble";
+import { MediaFrame } from "@/components/media-frame";
 import { Monogram } from "@/components/monogram";
 import { Coupon, CouponLink } from "@/components/coupon";
 import { GoldConfetti } from "@/components/gold-confetti";
@@ -20,6 +21,8 @@ type PodiumEntry = {
   photoUrl: string | null;
   messageText: string | null;
   messageAt: string | null;
+  mediaUrl: string | null;
+  mediaType: string | null;
   isMember: boolean;
   stats: string[];
 };
@@ -49,6 +52,8 @@ function buildGroups(category: CeremonyCategory): RevealGroup[] {
         photoUrl: tally.nominee.photoUrl,
         messageText: tally.nominee.messageText,
         messageAt: tally.nominee.messageAt,
+        mediaUrl: tally.nominee.mediaUrl,
+        mediaType: tally.nominee.mediaType,
         isMember: tally.nominee.memberId !== null,
         stats: [
           `${tally.points} puntos`,
@@ -74,6 +79,8 @@ function buildGroups(category: CeremonyCategory): RevealGroup[] {
         photoUrl: tally.nominee.photoUrl,
         messageText: null,
         messageAt: null,
+        mediaUrl: tally.nominee.mediaUrl,
+        mediaType: tally.nominee.mediaType,
         isMember: true,
         stats: [
           `${tally.votes} votos`,
@@ -98,6 +105,8 @@ function buildGroups(category: CeremonyCategory): RevealGroup[] {
         photoUrl: entry.photoUrl,
         messageText: null,
         messageAt: null,
+        mediaUrl: entry.mediaUrl,
+        mediaType: entry.mediaType,
         isMember: entry.memberId !== null,
         stats: ["por decisión del comité"],
       };
@@ -364,9 +373,13 @@ export function CeremonyPlayer({
                     key={nominee.id}
                     author={nominee.memberName ?? nominee.authorName ?? "Anónimo"}
                     at={nominee.messageAt}
-                    text={nominee.messageText ?? ""}
+                    text={nominee.messageText}
                     compact
-                  />
+                  >
+                    {nominee.mediaUrl ? (
+                      <MediaFrame url={nominee.mediaUrl} type={nominee.mediaType} compact />
+                    ) : null}
+                  </ChatBubble>
                 ))}
               </div>
             ) : (
@@ -444,6 +457,11 @@ export function CeremonyPlayer({
                               text={entry.messageText}
                               compact
                             />
+                          </div>
+                        ) : null}
+                        {entry.mediaUrl ? (
+                          <div className="mt-4">
+                            <MediaFrame url={entry.mediaUrl} type={entry.mediaType} />
                           </div>
                         ) : null}
                         <p className="tabular mt-4 text-[12px] tracking-[0.05em] text-ink-soft">

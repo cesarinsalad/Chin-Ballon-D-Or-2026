@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { upload } from "@vercel/blob/client";
 import { Coupon, CouponLink } from "@/components/coupon";
 import { Monogram } from "@/components/monogram";
 import { DiamondDivider } from "@/components/ornaments";
@@ -28,10 +29,13 @@ type AdminData = {
       authorName: string | null;
       messageText: string | null;
       messageAt: string | null;
+      mediaUrl: string | null;
+      mediaType: string | null;
       rankPosition: number | null;
     }>;
   }>;
   turnout: { totalBallots: number };
+  blobEnabled: boolean;
 };
 
 type Results = {
@@ -104,6 +108,26 @@ async function resizePhoto(file: File): Promise<string> {
   return canvas.toDataURL("image/jpeg", 0.82);
 }
 
+function readFileAsDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result;
+      if (typeof result === "string") resolve(result);
+      else reject(new Error("lectura"));
+    };
+    reader.onerror = () => reject(new Error("lectura"));
+    reader.readAsDataURL(file);
+  });
+}
+
+function mediaPathname(nomineeId: number, file: File): string {
+  const extension = (file.name.split(".").pop() ?? "bin")
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "");
+  return `nominees/mensaje-${nomineeId}-${Date.now()}.${extension || "bin"}`;
+}
+
 export function AdminPanel() {
   const [data, setData] = useState<AdminData | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -119,6 +143,8 @@ export function AdminPanel() {
   const [reloadKey, setReloadKey] = useState(0);
   const photoInputRef = useRef<HTMLInputElement>(null);
   const photoTargetRef = useRef<number | null>(null);
+  const mediaInputRef = useRef<HTMLInputElement>(null);
+  const mediaTargetRef = useRef<number | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -202,6 +228,47 @@ export function AdminPanel() {
     }
   }
 
+  async function uploadMedia(nomineeId: number, file: File) {
+    setError(null);
+    try {
+      if (data?.blobEnabled) {
+        const blob = await upload(mediaPathname(nomineeId, file), file, {
+          access: "public",
+          handleUploadUrl: "/api/admin/media",
+          contentType: file.type,
+          multipart: file.size > 8 * 1024 * 1024,
+        });
+        const failure = await call(`/api/admin/nominees/${nomineeId}`, "PATCH", {
+          mediaUrl: blob.url,
+          mediaType: file.type,
+        });
+        if (failure) setError(failure);
+        else await refreshDone();
+        return;
+      }
+      if (file.size > 2_300_000) {
+        setError(
+          "Sin almacenamiento remoto configurado solo suben archivos de hasta ~2 MB (los videos necesitan el store Blob de Vercel: ver README de despliegue).",
+        );
+        return;
+      }
+      const dataUrl = await readFileAsDataUrl(file);
+      const failure = await call(`/api/admin/nominees/${nomineeId}`, "PATCH", {
+        mediaUrl: dataUrl,
+        mediaType: file.type,
+      });
+      if (failure) setError(failure);
+      else await refreshDone();
+    } catch {
+      setError("La subida falló. Comprueba tu conexión e inténtalo de nuevo.");
+    }
+  }
+
+  async function refreshDone(): Promise<void> {
+    setNotice("Media adjuntada.");
+    setReloadKey((key) => key + 1);
+  }
+
   if (!data) {
     return (
       <div className="flex flex-1 items-center justify-center py-24">
@@ -261,6 +328,19 @@ export function AdminPanel() {
           const file = event.target.files?.[0];
           const memberId = photoTargetRef.current;
           if (file && memberId) void uploadPhoto(memberId, file);
+          event.target.value = "";
+        }}
+      />
+
+      <input
+        ref={mediaInputRef}
+        type="file"
+        accept="video/mp4,video/webm,video/quicktime,image/gif,image/jpeg,image/png,image/webp"
+        className="hidden"
+        onChange={(event) => {
+          const file = event.target.files?.[0];
+          const nomineeId = mediaTargetRef.current;
+          if (file && nomineeId) void uploadMedia(nomineeId, file);
           event.target.value = "";
         }}
       />
@@ -606,12 +686,13 @@ export function AdminPanel() {
                       <textarea
                         defaultValue={nominee.messageText ?? ""}
                         rows={2}
+                        placeholder={nominee.mediaUrl ? "Sin texto — el mensaje es la media adjunta" : undefined}
                         onBlur={(event) => {
                           if (event.target.value !== (nominee.messageText ?? "")) {
                             void withNotice(
                               () =>
                                 call(`/api/admin/nominees/${nominee.id}`, "PATCH", {
-                                  messageText: event.target.value,
+                                  messageText: event.target.value || null,
                                 }),
                               "Mensaje actualizado.",
                             );
@@ -620,6 +701,56 @@ export function AdminPanel() {
                         className="border border-ink/40 bg-ivory-deep/50 px-2 py-1.5 text-[12px] leading-snug text-ink focus:border-foil"
                         aria-label="Texto del mensaje"
                       />
+                      <div className="flex flex-wrap items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            mediaTargetRef.current = nominee.id;
+                            mediaInputRef.current?.click();
+                          }}
+                          className="plate-press border border-ink/50 bg-ivory px-3 py-1.5 font-caps text-[10px] tracking-[0.14em] text-ink-soft uppercase"
+                        >
+                          {nominee.mediaUrl ? "Cambiar la media" : "Adjuntar video/gif"}
+                        </button>
+                        {nominee.mediaUrl ? (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              withNotice(
+                                () =>
+                                  call(`/api/admin/nominees/${nominee.id}`, "PATCH", {
+                                    mediaUrl: null,
+                                    mediaType: null,
+                                  }),
+                                "Media retirada.",
+                              )
+                            }
+                            className="plate-press border border-ink/50 bg-ivory px-3 py-1.5 font-caps text-[10px] tracking-[0.14em] text-ink-soft uppercase"
+                          >
+                            Quitar la media
+                          </button>
+                        ) : null}
+                        {nominee.mediaUrl ? (
+                          <span className="flex items-center gap-2 text-[11px] italic text-ink-faint">
+                            {nominee.mediaType?.startsWith("video/") ? (
+                              <video
+                                src={nominee.mediaUrl}
+                                controls
+                                preload="metadata"
+                                playsInline
+                                className="h-12 w-20 border border-ink/40 bg-black object-contain"
+                              />
+                            ) : (
+                              <img
+                                src={nominee.mediaUrl}
+                                alt="Preview de la media"
+                                className="h-12 w-20 border border-ink/40 object-contain"
+                              />
+                            )}
+                            {nominee.mediaType}
+                          </span>
+                        ) : null}
+                      </div>
                     </div>
                   ))}
                   <button

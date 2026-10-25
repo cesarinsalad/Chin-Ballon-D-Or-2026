@@ -3,21 +3,22 @@ import { z } from "zod";
 import { addMessageNominee, addPodiumNominee } from "@/lib/admin-ops";
 import { requireAdmin, sameOriginGuard } from "@/lib/http";
 
-const createSchema = z.discriminatedUnion("type", [
-  z.object({
-    type: z.literal("message"),
-    categoryKey: z.string().min(1).max(32),
-    authorName: z.string().min(1).max(40),
-    messageText: z.string().min(1).max(2000),
-    messageAt: z.string().max(40).nullable().optional(),
-  }),
-  z.object({
-    type: z.literal("podium"),
-    categoryKey: z.string().min(1).max(32),
-    memberId: z.number().int().positive(),
-    rankPosition: z.number().int().min(1).max(10),
-  }),
-]);
+const messageSchema = z.object({
+  type: z.literal("message"),
+  categoryKey: z.string().min(1).max(32),
+  authorName: z.string().min(1).max(40),
+  messageText: z.string().max(2000).nullable().optional(),
+  messageAt: z.string().max(40).nullable().optional(),
+  mediaUrl: z.string().max(3_200_000).nullable().optional(),
+  mediaType: z.string().max(80).nullable().optional(),
+});
+const podiumSchema = z.object({
+  type: z.literal("podium"),
+  categoryKey: z.string().min(1).max(32),
+  memberId: z.number().int().positive(),
+  rankPosition: z.number().int().min(1).max(10),
+});
+const createSchema = z.discriminatedUnion("type", [messageSchema, podiumSchema]);
 
 export async function POST(request: Request) {
   if (!sameOriginGuard(request)) {
@@ -37,8 +38,10 @@ export async function POST(request: Request) {
       ? await addMessageNominee({
           categoryKey: data.categoryKey,
           authorName: data.authorName,
-          messageText: data.messageText,
+          messageText: data.messageText ?? null,
           messageAt: data.messageAt ?? null,
+          mediaUrl: data.mediaUrl ?? null,
+          mediaType: data.mediaType ?? null,
         })
       : await addPodiumNominee({
           categoryKey: data.categoryKey,

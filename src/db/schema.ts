@@ -58,6 +58,8 @@ export const nominees = pgTable("nominees", {
   authorName: text("author_name"),
   messageText: text("message_text"),
   messageAt: text("message_at"),
+  mediaUrl: text("media_url"),
+  mediaType: text("media_type"),
   rankPosition: integer("rank_position"),
   position: integer("position").notNull().default(0),
 });

@@ -1,15 +1,19 @@
+import type { ReactNode } from "react";
+
 export function ChatBubble({
   author,
   at,
   text,
   compact = false,
   className = "",
+  children,
 }: {
   author: string;
   at?: string | null;
-  text: string;
+  text?: string | null;
   compact?: boolean;
   className?: string;
+  children?: ReactNode;
 }) {
   return (
     <figure
@@ -22,19 +26,22 @@ export function ChatBubble({
         style={{ margin: 3 }}
         aria-hidden="true"
       />
-      <figcaption className="flex items-baseline justify-between gap-3">
+      <figcaption className="flex items-baseline justify-between gap-3 pr-9">
         <span className="caps-line-tight font-caps text-[11px] text-ink-soft">
           {author}
         </span>
         {at ? <span className="text-[11px] italic text-ink-faint">{at}</span> : null}
       </figcaption>
-      <blockquote
-        className={`mt-2 font-body text-ink ${
-          compact ? "text-[14px] leading-snug" : "text-[15px] leading-relaxed"
-        }`}
-      >
-        {text}
-      </blockquote>
+      {text ? (
+        <blockquote
+          className={`mt-2 font-body text-ink ${
+            compact ? "text-[14px] leading-snug" : "text-[15px] leading-relaxed"
+          }`}
+        >
+          {text}
+        </blockquote>
+      ) : null}
+      {children}
     </figure>
   );
 }

@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence, MotionConfig } from "framer-motion";
 import { ChatBubble } from "@/components/chat-bubble";
+import { MediaFrame } from "@/components/media-frame";
 import { Coupon, CouponLink } from "@/components/coupon";
 import { BallVignette, DiamondDivider } from "@/components/ornaments";
 import { Monogram, rankLabel } from "@/components/monogram";
@@ -30,6 +31,8 @@ type Nominee = {
   authorName: string | null;
   messageText: string | null;
   messageAt: string | null;
+  mediaUrl: string | null;
+  mediaType: string | null;
 };
 
 type Category = {
@@ -328,10 +331,14 @@ function BallotWizardInner({
                 <ChatBubble
                   author={nominee.authorName ?? "Anónimo"}
                   at={nominee.messageAt}
-                  text={nominee.messageText ?? ""}
+                  text={nominee.messageText}
                   compact
                   className="pr-9"
-                />
+                >
+                  {nominee.mediaUrl ? (
+                    <MediaFrame url={nominee.mediaUrl} type={nominee.mediaType} compact />
+                  ) : null}
+                </ChatBubble>
               </button>
             );
           })}
