@@ -161,6 +161,7 @@ export function AdminPanel() {
   const photoTargetRef = useRef<number | null>(null);
   const mediaInputRef = useRef<HTMLInputElement>(null);
   const mediaTargetRef = useRef<number | null>(null);
+  const messageBannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let active = true;
@@ -182,6 +183,12 @@ export function AdminPanel() {
       active = false;
     };
   }, [reloadKey]);
+
+  useEffect(() => {
+    if (error) {
+      messageBannerRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [error]);
 
   async function call(
     path: string,
@@ -300,7 +307,7 @@ export function AdminPanel() {
       }
       if (file.size > 2_300_000) {
         setError(
-          "Sin almacenamiento remoto configurado solo suben archivos de hasta ~2 MB (los videos necesitan el store Blob de Vercel: ver README de despliegue).",
+          "Sin almacenamiento remoto activo solo suben archivos de hasta ~2 MB. Los videos grandes necesitan el store Blob de Vercel conectado a este proyecto.",
         );
         return;
       }
@@ -397,15 +404,27 @@ export function AdminPanel() {
         }}
       />
 
-      {error ? (
-        <p role="alert" className="border-y border-ink px-3 py-2 text-center text-[12px] italic text-ink-soft">
-          {error}
-        </p>
-      ) : null}
-      {notice ? (
-        <p className="border-y border-foil/60 px-3 py-2 text-center text-[12px] italic text-ink-soft">
-          {notice}
-        </p>
+      {error || notice ? (
+        <div
+          ref={messageBannerRef}
+          className={`sticky top-1 z-30 mx-auto max-w-[560px] bg-ivory px-1 shadow-[0_4px_10px_rgba(28,24,19,0.18)] ${
+            error ? "pt-1" : ""
+          }`}
+        >
+          {error ? (
+            <p
+              role="alert"
+              className="border-y border-ink bg-ivory px-3 py-2 text-center text-[12px] italic text-ink-soft"
+            >
+              {error}
+            </p>
+          ) : null}
+          {notice ? (
+            <p className="border-y border-foil/60 bg-ivory px-3 py-2 text-center text-[12px] italic text-ink-soft">
+              {notice}
+            </p>
+          ) : null}
+        </div>
       ) : null}
 
       {tab === "etat" ? (

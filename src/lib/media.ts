@@ -45,5 +45,6 @@ export function isBlobUrl(url: string | undefined | null): boolean {
 }
 
 export function blobConfigured(): boolean {
-  return Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+  if (process.env.BLOB_READ_WRITE_TOKEN) return true;
+  return Boolean(process.env.BLOB_STORE_ID && process.env.VERCEL);
 }
