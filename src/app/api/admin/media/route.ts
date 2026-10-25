@@ -20,16 +20,35 @@ export async function POST(request: Request) {
   if (!body) {
     return NextResponse.json({ error: "Cuerpo inválido." }, { status: 400 });
   }
-  const result = await handleUpload({
-    body: body,
-    request,
-    onBeforeGenerateToken: async () => ({
-      allowedContentTypes: [...MEDIA_MIME_TYPES],
-      maximumSizeInBytes: MAX_BLOB_SIZE_BYTES,
-      addRandomSuffix: true,
-    }),
-    onUploadCompleted: async () => {},
-  });
+  let result: Awaited<ReturnType<typeof handleUpload>>;
+  try {
+    result = await handleUpload({
+      body: body,
+      request,
+      onBeforeGenerateToken: async () => ({
+        allowedContentTypes: [...MEDIA_MIME_TYPES],
+        maximumSizeInBytes: MAX_BLOB_SIZE_BYTES,
+        addRandomSuffix: true,
+      }),
+      onUploadCompleted: async () => {},
+    });
+  } catch (uploadError) {
+    const message = uploadError instanceof Error ? uploadError.message : "";
+    console.error("[admin/media] handleUpload falló:", uploadError);
+    if (/token|credential|denied|unauthorized|forbidden/i.test(message)) {
+      return NextResponse.json(
+        {
+          error:
+            "El almacén de ficheros rechazó la petición: token ausente o inválido.",
+        },
+        { status: 503 },
+      );
+    }
+    return NextResponse.json(
+      { error: "El almacén de ficheros falló al preparar la subida." },
+      { status: 500 },
+    );
+  }
   return new Response(JSON.stringify(result), {
     status: 200,
     headers: { "content-type": "application/json" },

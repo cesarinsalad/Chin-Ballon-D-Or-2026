@@ -302,6 +302,17 @@ export function AdminPanel() {
             setError("El archivo supera el máximo de 60 MB.");
             return;
           }
+          if (
+            uploadError instanceof Error &&
+            /client token|credentials|denied|unauthorized/i.test(
+              uploadError.message,
+            )
+          ) {
+            setError(
+              "El almacén Blob rechazó la subida (token inválido o store caído). Revisa BLOB_READ_WRITE_TOKEN.",
+            );
+            return;
+          }
           setError(
             "La subida falló. Comprueba tu conexión e inténtalo de nuevo.",
           );
