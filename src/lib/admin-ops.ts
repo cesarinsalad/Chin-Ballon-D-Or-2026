@@ -75,6 +75,30 @@ export async function deleteMember(memberId: number): Promise<string | null> {
   return null;
 }
 
+export async function voidBallot(
+  voterId: number,
+  categoryId: number,
+): Promise<string | null> {
+  const [settingsRows] = await Promise.all([
+    db().select().from(settings).where(eq(settings.id, 1)),
+  ]);
+  if (!settingsRows[0]?.votingOpen) {
+    return "La votación está cerrada. Los votos están sellados.";
+  }
+  const ballot = (
+    await db()
+      .select({ id: ballots.id })
+      .from(ballots)
+      .where(and(eq(ballots.voterId, voterId), eq(ballots.categoryId, categoryId)))
+      .limit(1)
+  )[0];
+  if (!ballot) {
+    return "No hay papeleta sellada en esa categoría.";
+  }
+  await db().delete(ballots).where(eq(ballots.id, ballot.id));
+  return null;
+}
+
 export async function deleteNominee(nomineeId: number): Promise<string | null> {
   const nominee = (
     await db().select().from(nominees).where(eq(nominees.id, nomineeId))

@@ -154,6 +154,12 @@ export function AdminPanel() {
   const [codeDraft, setCodeDraft] = useState<string | null>(null);
   const [confirmReveal, setConfirmReveal] = useState(false);
   const [confirmVoting, setConfirmVoting] = useState(false);
+  const [voidTarget, setVoidTarget] = useState<{
+    voterId: number;
+    categoryId: number;
+    memberName: string;
+    categoryTitle: string;
+  } | null>(null);
   const [newMemberName, setNewMemberName] = useState("");
   const [reloadKey, setReloadKey] = useState(0);
   const [uploadPct, setUploadPct] = useState<{ nomineeId: number; pct: number } | null>(null);
@@ -965,27 +971,95 @@ export function AdminPanel() {
             {data.turnout.totalBallots} papeletas selladas en total · las cifras
             viven aquí hasta el telón.
           </p>
+          {voidTarget ? (
+            <div className="flex flex-col gap-2 border border-ink bg-ivory px-4 py-3">
+              <p className="text-center text-[12px] italic text-ink-soft">
+                ¿Anular la papeleta de {voidTarget.memberName} en{" "}
+                {voidTarget.categoryTitle}? El votante podrá sellarla de nuevo.
+              </p>
+              <div className="grid grid-cols-2 gap-2">
+                <Coupon
+                  action={() => setVoidTarget(null)}
+                  label="Cancelar"
+                  invert={false}
+                />
+                <Coupon
+                  action={() => {
+                    const target = voidTarget;
+                    setVoidTarget(null);
+                    if (!target) return;
+                    void withNotice(
+                      () =>
+                        call("/api/admin/ballots", "DELETE", {
+                          voterId: target.voterId,
+                          categoryId: target.categoryId,
+                        }),
+                      "Papeleta anulada. El votante puede volver a sellar.",
+                    );
+                  }}
+                  label="Confirmar"
+                />
+              </div>
+            </div>
+          ) : null}
           {data.members.map((member) => (
             <article
               key={member.id}
-              className="flex items-center gap-3 border border-ink/40 bg-ivory px-4 py-3"
+              className="flex flex-wrap items-center gap-3 border border-ink/40 bg-ivory px-4 py-3"
             >
               <Monogram name={member.name} photoUrl={member.photoUrl} size={40} />
               <span className="font-caps text-[13px] tracking-[0.06em] text-ink">
                 {member.name}
               </span>
               <span className="tabular ml-auto flex items-center gap-2 text-[12px] text-ink-soft">
-                {member.votedCategoryIds.length} / 4
-                {member.votedCategoryIds.length === 4 ? (
+                {member.votedCategoryIds.length} / {data.categories.length}
+                {member.votedCategoryIds.length === data.categories.length &&
+                data.categories.length > 0 ? (
                   <span className="font-caps text-[10px] tracking-[0.1em] text-foil-ink uppercase">
                     Complète
                   </span>
                 ) : null}
               </span>
+              {member.votedCategoryIds.length > 0 ? (
+                <ul className="flex w-full flex-wrap gap-1.5 pt-1">
+                  {member.votedCategoryIds.map((categoryId) => {
+                    const category = data.categories.find(
+                      (item) => item.id === categoryId,
+                    );
+                    return (
+                      <li key={categoryId}>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setVoidTarget({
+                              voterId: member.id,
+                              categoryId,
+                              memberName: member.name,
+                              categoryTitle: category?.title ?? `#${categoryId}`,
+                            })
+                          }
+                          className="plate-press group flex items-center gap-1.5 border border-ink/40 bg-ivory-deep/60 px-2.5 py-1 font-caps text-[10px] tracking-[0.08em] text-ink-soft uppercase transition-colors hover:border-ink hover:text-ink"
+                          aria-label={`Anular papeleta en ${category?.title ?? categoryId}`}
+                          title="Anular esta papeleta"
+                        >
+                          {category?.title ?? `#${categoryId}`}
+                          <span
+                            aria-hidden="true"
+                            className="text-ink-faint group-hover:text-ink"
+                          >
+                            ×
+                          </span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : null}
             </article>
           ))}
           <p className="text-[11px] italic text-ink-faint">
-            Papeleta ciega: aquí se ve quién votó, jamás qué votó.
+            Papeleta ciega: aquí se ve quién votó, jamás qué votó. El × anula la
+            papeleta sin revelarla — solo con la votación abierta.
           </p>
         </section>
       ) : null}
