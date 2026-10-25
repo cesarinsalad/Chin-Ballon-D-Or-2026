@@ -29,6 +29,7 @@ export default async function VotarPage() {
             categories={ballotData.categories}
             initialVotedKeys={ballotData.votedKeys}
             voterName={session.name}
+            voterMemberId={session.memberId}
             votingClosed
           />
         </RuleFrame>
@@ -43,6 +44,7 @@ export default async function VotarPage() {
           categories={ballotData.categories}
           initialVotedKeys={ballotData.votedKeys}
           voterName={session.name}
+          voterMemberId={session.memberId}
         />
       </RuleFrame>
     </main>

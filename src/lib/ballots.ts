@@ -29,10 +29,15 @@ export async function submitBallot(
   }
 
   const categoryNominees = await db()
-    .select({ id: nominees.id })
+    .select({ id: nominees.id, memberId: nominees.memberId })
     .from(nominees)
     .where(eq(nominees.categoryId, category.id));
   const validNomineeIds = new Set(categoryNominees.map((nominee) => nominee.id));
+  const selfNomineeIds = new Set(
+    categoryNominees
+      .filter((nominee) => nominee.memberId === voterId)
+      .map((nominee) => nominee.id),
+  );
 
   const distinctIds = new Set(submission.picks.map((pick) => pick.nomineeId));
   if (distinctIds.size !== submission.picks.length) {
@@ -41,6 +46,9 @@ export async function submitBallot(
   for (const pick of submission.picks) {
     if (!validNomineeIds.has(pick.nomineeId)) {
       return { ok: false, status: 400, error: "Nominado inválido para esta categoría." };
+    }
+    if (selfNomineeIds.has(pick.nomineeId)) {
+      return { ok: false, status: 400, error: "No puedes votarte a ti mismo." };
     }
   }
 
@@ -53,7 +61,8 @@ export async function submitBallot(
       return { ok: false, status: 400, error: "El top 3 necesita un 1º, un 2º y un 3º." };
     }
   } else {
-    const required = Math.min(5, validNomineeIds.size);
+    const pickable = validNomineeIds.size - selfNomineeIds.size;
+    const required = Math.min(5, pickable);
     if (submission.picks.length !== required) {
       return {
         ok: false,

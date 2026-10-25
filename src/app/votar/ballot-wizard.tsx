@@ -42,10 +42,10 @@ type Category = {
 };
 
 const CATEGORY_BLURB: Record<string, string> = {
-  balon: "Elige tu top 3. El 1º puesto vale 5 puntos, el 2º vale 3 y el 3º vale 1. Autovoto permitido.",
+  balon: "Elige tu top 3. El 1º puesto vale 5 puntos, el 2º vale 3 y el 3º vale 1. No puedes votarte a ti mismo.",
   puskas: "Los cuatro mensajes nominados por el capitán. Ránkealos: 5, 3 y 1 punto.",
   olivada: "Fantasmas y fastameadas del año. Ránkealos: 5, 3 y 1 punto.",
-  mejor5: "Marca a los cinco que forman el equipo ideal del año. Un punto por aparición.",
+  mejor5: "Marca a los cinco que forman el equipo ideal del año. Un punto por aparición. No puedes incluirte a ti mismo.",
 };
 
 function SealDot({ filled }: { filled: boolean }) {
@@ -73,10 +73,33 @@ function EmbossSeal({ label }: { label: string }) {
   );
 }
 
+function LockIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 14 14" className={className} aria-hidden="true">
+      <rect
+        x="2.5"
+        y="6.2"
+        width="9"
+        height="6"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M4.7 6.2 V4.4 A2.3 2.3 0 0 1 9.3 4.4 V6.2"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+}
+
 export function BallotWizard(props: {
   categories: Category[];
   initialVotedKeys: string[];
   voterName: string;
+  voterMemberId: number;
   votingClosed?: boolean;
 }) {
   return (
@@ -90,11 +113,13 @@ function BallotWizardInner({
   categories,
   initialVotedKeys,
   voterName,
+  voterMemberId,
   votingClosed = false,
 }: {
   categories: Category[];
   initialVotedKeys: string[];
   voterName: string;
+  voterMemberId: number;
   votingClosed?: boolean;
 }) {
   const [votedKeys, setVotedKeys] = useState<string[]>(initialVotedKeys);
@@ -158,7 +183,9 @@ function BallotWizardInner({
   }
 
   const rankedCount = Object.keys(ranks).length;
-  const pickMax = Math.min(5, current?.nominees.length ?? 5);
+  const selfInCategory =
+    current?.nominees.some((nominee) => nominee.memberId === voterMemberId) ?? false;
+  const pickMax = Math.min(5, (current?.nominees.length ?? 5) - (selfInCategory ? 1 : 0));
   const pickCount = picks.size;
   const canSeal =
     current?.kind === "ranked" ? rankedCount === 3 : pickCount === pickMax;
@@ -310,24 +337,29 @@ function BallotWizardInner({
           })}
         </div>
       ) : (
-        <div className={`grid gap-3 ${current.kind === "pick5" ? "grid-cols-2 sm:grid-cols-3" : "grid-cols-2 sm:grid-cols-3"}`}>
-          {current.nominees.map((nominee) => {
+        <>
+          <div className={`grid gap-3 grid-cols-2 sm:grid-cols-3`}>
+            {current.nominees.map((nominee) => {
             const rank = ranks[nominee.id];
             const picked = picks.has(nominee.id);
             const active = rank !== undefined || picked;
+            const isSelf = nominee.memberId === voterMemberId;
             return (
               <button
                 key={nominee.id}
                 type="button"
+                disabled={isSelf}
                 onClick={() =>
                   current.kind === "ranked"
                     ? toggleRank(nominee.id)
                     : togglePick(nominee.id, pickMax)
                 }
                 aria-pressed={active}
+                aria-disabled={isSelf}
+                title={isSelf ? "No puedes votarte a ti mismo" : undefined}
                 className={`plate-press relative flex flex-col items-center gap-2.5 border bg-ivory px-3 py-5 transition-[transform,box-shadow,background-color] duration-150 active:translate-y-px ${
                   active ? "border-foil bg-ivory-deep" : "border-ink/60"
-                }`}
+                } ${isSelf ? "cursor-not-allowed opacity-45 shadow-none" : ""}`}
               >
                 <span
                   className={`absolute top-2 right-2 flex h-8 w-8 items-center justify-center border ${
@@ -340,13 +372,19 @@ function BallotWizardInner({
                       active ? "text-foil-ink" : "text-ink-faint"
                     }`}
                   >
-                    {current.kind === "ranked"
-                      ? rank !== undefined
-                        ? rankLabel(rank)
-                        : "—"
-                      : picked
-                        ? <CheckMark className="h-3.5 w-3.5" />
-                        : "—"}
+                    {isSelf ? (
+                      <LockIcon className="h-3.5 w-3.5" />
+                    ) : current.kind === "ranked" ? (
+                      rank !== undefined ? (
+                        rankLabel(rank)
+                      ) : (
+                        "—"
+                      )
+                    ) : picked ? (
+                      <CheckMark className="h-3.5 w-3.5" />
+                    ) : (
+                      "—"
+                    )}
                   </span>
                 </span>
                 <Monogram
@@ -362,6 +400,13 @@ function BallotWizardInner({
             );
           })}
         </div>
+          {selfInCategory ? (
+            <p className="text-center text-[12px] italic text-ink-faint">
+              <LockIcon className="mr-1.5 inline h-3 w-3 align-[-1px]" />
+              No puedes votarte a ti mismo.
+            </p>
+          ) : null}
+        </>
       )}
 
       <div className="mt-auto flex flex-col gap-3 pt-4">

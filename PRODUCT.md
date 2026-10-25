@@ -30,7 +30,7 @@ Es una "gala" completa, no una encuesta: flujo de dos actos (votación sellada y
 
 ## Capabilities and Constraints
 
-- Votadas: Balón de Oro (top-3 con puntos 5-3-1, todos nominados, auto-voto permitido), Puskas y Olivada (4 mensajes nominados cada una, mismo top-3 5-3-1), Mejor 5 (marcar 5 sin orden, 1 punto c/u; empate en el 5º → equipo de 6).
+- Votadas: Balón de Oro (top-3 con puntos 5-3-1, todos nominados, auto-voto prohibido), Puskas y Olivada (4 mensajes nominados cada una, mismo top-3 5-3-1, sin restricción de autoría), Mejor 5 (marcar 5 sin orden, 1 punto c/u, auto-voto prohibido; empate en el 5º → equipo de 6).
 - Ceremoniales (sin voto, podio fijado por el capitán): Mr Parley (César > Fiume > Vargas > Gabriel > Anfitrión) y Entrenadores (Carlos > Manuel > César > Fiume).
 - Desempates: más 1er-puestos → más 2º-puestos → premio compartido.
 - Orden de la ceremonia: Olivada → Puskas → Mejor 5 → Entrenadores → Mr Parley → Balón de Oro (gran final).
