@@ -28,7 +28,7 @@ const CATEGORY_SEEDS = [
   {
     key: "olivada",
     title: "Olivada del Año",
-    tagline: "El fantasma y la fastameada más gloriosos del grupo",
+    tagline: "Tiene que llamar a los cazafantasmas",
     kind: "ranked",
     position: 1,
     autoNominees: false,
