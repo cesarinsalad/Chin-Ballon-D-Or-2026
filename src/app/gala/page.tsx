@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { getCeremonyData } from "@/lib/event";
-import { getVoterSession, isAdminSession } from "@/lib/session";
+import { isAdminSession } from "@/lib/session";
 import { BallVignette, RuleFrame } from "@/components/ornaments";
 import { CeremonyPlayer } from "./ceremony-player";
 import { connection } from "next/server";
@@ -13,10 +12,7 @@ export const metadata = {
 
 export default async function GalaPage() {
   await connection();
-  const session = await getVoterSession();
   const adminPreview = await isAdminSession();
-  if (!session && !adminPreview) redirect("/entrar");
-
   const { settings, categories, turnout } = await getCeremonyData();
 
   if (!settings.revealActive && !adminPreview) {

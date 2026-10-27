@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import Image from "next/image";
 import { getCeremonyData } from "@/lib/event";
-import { getVoterSession, isAdminSession } from "@/lib/session";
+import { isAdminSession } from "@/lib/session";
 import { BallVignette, DiamondDivider, RuleFrame } from "@/components/ornaments";
 import { Monogram } from "@/components/monogram";
 import { mainLogo } from "@/components/logos";
@@ -20,10 +19,7 @@ function pct(part: number, total: number): string {
 
 export default async function ActaPage() {
   await connection();
-  const session = await getVoterSession();
   const adminPreview = await isAdminSession();
-  if (!session && !adminPreview) redirect("/entrar");
-
   const { settings, categories, turnout } = await getCeremonyData();
 
   if (!settings.revealActive && !adminPreview) {
