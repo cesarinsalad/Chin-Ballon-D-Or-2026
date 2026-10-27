@@ -468,9 +468,9 @@ export function CeremonyPlayer({
     advanceLabel = "Alzar el telón";
   } else if (phase === "intro") {
     advanceLabel = isBalonScene
-      ? "Iniciar cuenta atrás ▶"
+      ? "Iniciar cuenta atrás"
       : isInterludeScene
-        ? "Ver actuación en directo ▶"
+        ? "Ver actuación en directo"
         : isDirect
           ? sceneIndex + 1 < scenes.length
             ? "Siguiente categoría"
@@ -482,19 +482,19 @@ export function CeremonyPlayer({
       const currentStep = steps[stepIndex];
       if (currentStep?.type === "countdown") {
         advanceLabel = currentStep.isRemainingThree
-          ? "Ver anuncio del ganador (Video) ▶"
-          : "Siguiente puesto ▶";
+          ? "Ver anuncio del ganador (Video)"
+          : "Siguiente puesto";
       } else if (currentStep?.type === "video") {
-        advanceLabel = "Ver podio definitivo ▶";
+        advanceLabel = "Ver podio definitivo";
       } else if (currentStep?.type === "podium") {
-        advanceLabel = "Ver telón final ✦";
+        advanceLabel = "Ver telón final";
       } else {
-        advanceLabel = "Continuar ▶";
+        advanceLabel = "Continuar";
       }
     } else if (isInterludeScene) {
-      advanceLabel = "Ir al Balón d'Or ✦";
+      advanceLabel = "Ir al Balón d'Or";
     } else if (isWinnerStep && !envelopeOpen && !noVotes) {
-      advanceLabel = "Abrir sobre ✦";
+      advanceLabel = isOlivadaScene ? "Revelar ganador" : "Abrir sobre";
     } else if (stepIndex + 1 < (scene?.groups.length ?? 0)) {
       advanceLabel = "Siguiente puesto";
     } else if (sceneIndex + 1 < scenes.length) {
@@ -539,35 +539,6 @@ export function CeremonyPlayer({
     <MotionConfig reducedMotion="user">
       <main className="stage spotlight vignette-stage relative flex min-h-dvh flex-col overflow-hidden text-ivory">
         <GoldConfetti active={showConfetti} />
-
-        {/* Flechas de navegación laterales flotantes */}
-        {canGoBack ? (
-          <button
-            type="button"
-            onClick={regresar}
-            aria-label="Regresar escena anterior"
-            title="Regresar (Flecha izquierda)"
-            className="group fixed left-3 sm:left-6 top-1/2 -translate-y-1/2 z-30 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center border border-ivory/30 bg-stage/85 text-ivory/80 backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-105 hover:border-foil-bright hover:text-foil-bright hover:bg-stage-lift active:scale-95"
-          >
-            <svg viewBox="0 0 24 24" className="h-6 w-6 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
-        ) : null}
-
-        {canGoForward ? (
-          <button
-            type="button"
-            onClick={advance}
-            aria-label="Avanzar siguiente escena"
-            title="Avanzar (Flecha derecha o Espacio)"
-            className="group fixed right-3 sm:right-6 top-1/2 -translate-y-1/2 z-30 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center border border-ivory/30 bg-stage/85 text-ivory/80 backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-105 hover:border-foil-bright hover:text-foil-bright hover:bg-stage-lift active:scale-95"
-          >
-            <svg viewBox="0 0 24 24" className="h-6 w-6 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </button>
-        ) : null}
 
         <header className="absolute inset-x-0 top-0 z-20 flex items-center justify-between px-4 py-4">
           <span className="flex items-center gap-2" aria-label={`Escena ${Math.max(sceneIndex + 1, 0)} de ${scenes.length}`}>
@@ -945,11 +916,8 @@ export function CeremonyPlayer({
                 <button
                   type="button"
                   onClick={regresar}
-                  className="plate-press flex flex-1 items-center justify-center gap-2 border border-ivory/35 bg-stage-lift/90 px-4 py-3.5 font-caps text-[12px] tracking-wider text-ivory transition-all hover:border-foil-bright hover:text-foil-bright active:translate-y-px"
+                  className="plate-press flex flex-1 items-center justify-center border border-ivory/35 bg-stage-lift/90 px-4 py-3.5 font-caps text-[12px] tracking-wider text-ivory transition-all hover:border-foil-bright hover:text-foil-bright active:translate-y-px"
                 >
-                  <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <polyline points="15 18 9 12 15 6" />
-                  </svg>
                   <span>Regresar</span>
                 </button>
               ) : null}
@@ -957,20 +925,17 @@ export function CeremonyPlayer({
               <button
                 type="button"
                 onClick={advance}
-                className={`plate-press flex flex-1 items-center justify-center gap-2 border px-4 py-3.5 font-caps text-[12px] tracking-wider transition-all active:translate-y-px ${(isWinnerStep && !envelopeOpen) || (isBalonScene && phase === "reveal")
+                className={`plate-press flex flex-1 items-center justify-center border px-4 py-3.5 font-caps text-[12px] tracking-wider transition-all active:translate-y-px ${(isWinnerStep && !envelopeOpen) || (isBalonScene && phase === "reveal")
                   ? "border-foil bg-foil/25 text-foil-bright hover:bg-foil/35 shadow-lg shadow-foil/10"
                   : "border-ink bg-ivory text-ink hover:bg-ivory-deep"
                   }`}
               >
                 <span>{advanceLabel}</span>
-                <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
               </button>
             </div>
 
             <p className="caps-line-tight font-caps text-[10px] tracking-[0.2em] text-ivory/50 uppercase">
-              Usa los botones de flecha o el teclado (← / →)
+              Usa los botones o el teclado (← / →)
             </p>
           </footer>
         ) : (
@@ -978,11 +943,8 @@ export function CeremonyPlayer({
             <button
               type="button"
               onClick={regresar}
-              className="flex items-center gap-2 font-caps text-[11px] text-ivory/60 hover:text-ivory tracking-wider uppercase transition-colors"
+              className="font-caps text-[11px] text-ivory/60 hover:text-ivory tracking-wider uppercase transition-colors"
             >
-              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
               <span>Regresar a la última escena</span>
             </button>
           </footer>

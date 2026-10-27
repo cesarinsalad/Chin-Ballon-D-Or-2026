@@ -270,7 +270,7 @@ export function OlivadaReveal({
             <div key={position} className="flex flex-1 flex-col items-center gap-2">
               {/* Placa del nombre */}
               <div className="flex min-h-[88px] w-full flex-col items-center justify-end gap-1.5">
-                <AnimatePresence mode="wait">
+                <AnimatePresence initial={false}>
                   {revealed ? (
                     <motion.div
                       key="name"
@@ -284,11 +284,9 @@ export function OlivadaReveal({
                       }
                     >
                       <div className="flex -space-x-2">
-                        {g.entries.map((e) =>
-                          e.isMember ? (
-                            <Monogram key={e.key} name={e.name} photoUrl={e.photoUrl} size={isWinner ? 52 : 40} foil={isWinner} />
-                          ) : null,
-                        )}
+                        {g.entries.map((e) => (
+                          <Monogram key={e.key} name={e.name} photoUrl={e.photoUrl} size={isWinner ? 52 : 40} foil={isWinner} />
+                        ))}
                       </div>
                       {g.entries.map((e) => (
                         <span
@@ -308,11 +306,10 @@ export function OlivadaReveal({
                       initial={{ opacity: 0 }}
                       animate={
                         isWinner && winnerPending
-                          ? { opacity: 1, y: [0, -8, 0], scale: [1, 1.08, 1] }
-                          : { opacity: 1, y: [0, -4, 0] }
+                          ? { opacity: 1, y: [0, -8, 0], scale: [1, 1.08, 1], transition: { duration: 1.1, repeat: Infinity, ease: "easeInOut" } }
+                          : { opacity: 1, y: [0, -4, 0], transition: { duration: 3, repeat: Infinity, ease: "easeInOut" } }
                       }
-                      exit={{ opacity: 0, scale: 1.8, filter: "blur(6px)" }}
-                      transition={{ duration: isWinner && winnerPending ? 1.1 : 3, repeat: Infinity, ease: "easeInOut" }}
+                      exit={{ opacity: 0, scale: 1.8, filter: "blur(6px)", transition: { duration: 0.25 } }}
                     >
                       <Ghost className="h-auto w-full" />
                     </motion.span>
@@ -354,15 +351,14 @@ export function OlivadaReveal({
 
       {/* Detalle del paso actual */}
       <div className="relative w-full max-w-[440px]">
-        <AnimatePresence mode="wait">
+        <AnimatePresence initial={false}>
           {current && winnerPending ? (
             <motion.p
               key="pending"
               className="caps-line font-caps text-[11px] text-ivory/75"
               initial={{ opacity: 0 }}
-              animate={{ opacity: [0.4, 1, 0.4] }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1.6, repeat: Infinity }}
+              animate={{ opacity: [0.4, 1, 0.4], transition: { duration: 1.6, repeat: Infinity } }}
+              exit={{ opacity: 0, transition: { duration: 0.25 } }}
             >
               Y la olivada del año es…
             </motion.p>
@@ -372,8 +368,8 @@ export function OlivadaReveal({
               className="flex flex-col gap-3"
               initial={{ opacity: 0, y: 30, filter: "blur(6px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.6, ease: EASE, delay: current.position === 1 ? 0.7 : 0.5 }}
+              exit={{ opacity: 0, y: -16, transition: { duration: 0.25 } }}
+              transition={{ duration: 0.6, ease: EASE, delay: current.position === 1 ? 0.3 : 0.4 }}
             >
               <p className="caps-line font-caps text-[10px] text-foil-bright">
                 {current.label}
