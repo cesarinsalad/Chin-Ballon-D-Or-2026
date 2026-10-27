@@ -54,13 +54,15 @@ export function buildBalonTallyList(category: CeremonyCategory): BalonTally[] {
   // Ordenar por puntos desc, primeros puestos desc, nombre asc
   list.sort((a, b) => b.points - a.points || b.firsts - a.firsts || a.name.localeCompare(b.name));
 
-  // Normalizar posiciones para los que no tenían votos
+  // Normalizar posiciones
   let currentPos = 1;
   list.forEach((entry, i) => {
     if (i > 0) {
       const prev = list[i - 1];
       if (prev.points !== entry.points || prev.firsts !== entry.firsts) {
         currentPos = i + 1;
+      } else if (prev.position === 3) {
+        currentPos = 4;
       }
     }
     entry.position = currentPos;

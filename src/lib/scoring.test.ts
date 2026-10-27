@@ -47,6 +47,25 @@ describe("tallyRanked", () => {
     assert.equal(result[1].tied, true);
   });
 
+  it("divide empate de tercer puesto en tercero y cuarto", () => {
+    const result = tallyRanked([
+      { nomineeId: 1, rank: 1 },
+      { nomineeId: 2, rank: 2 },
+      { nomineeId: 3, rank: 3 },
+      { nomineeId: 4, rank: 3 },
+    ]);
+    assert.equal(result[0].nomineeId, 1);
+    assert.equal(result[0].position, 1);
+    assert.equal(result[1].nomineeId, 2);
+    assert.equal(result[1].position, 2);
+    assert.equal(result[2].nomineeId, 3);
+    assert.equal(result[2].position, 3);
+    assert.equal(result[3].nomineeId, 4);
+    assert.equal(result[3].position, 4);
+    assert.equal(result[2].tied, false);
+    assert.equal(result[3].tied, false);
+  });
+
   it("devuelve vacío sin votos", () => {
     assert.deepEqual(tallyRanked([]), []);
   });

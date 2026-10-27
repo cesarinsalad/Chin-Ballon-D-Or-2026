@@ -60,7 +60,13 @@ export function tallyRanked(
       previous.points === entry.points &&
       previous.firsts === entry.firsts &&
       previous.seconds === entry.seconds;
-    position = sameKey ? position : index + 1;
+    
+    // Si hay empate en el tercer lugar, se asigna 3º a uno y 4º al otro
+    if (sameKey && previous?.position === 3) {
+      position = 4;
+    } else {
+      position = sameKey ? position : index + 1;
+    }
     entry.position = position;
   });
 
