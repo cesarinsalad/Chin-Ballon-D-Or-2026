@@ -117,7 +117,7 @@ export function BalonIntro({
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
       >
-        El galardón supremo del chinparley. Todos los nominados a la noche definitiva:
+        El galardón supremo del chin. Todos los nominados a la noche definitiva:
       </motion.p>
 
       {/* Rejilla de los 7 nominados */}
